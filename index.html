@@ -183,6 +183,7 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
 .rpt-score{font-size:38px;font-weight:900;color:var(--blue)}
 .rpt-div{height:1px;background:var(--border);margin:12px 0}
 /* TOAST */
+.conv-bubble{background:linear-gradient(135deg,#EBF8FF,#E6FFFA);border-radius:11px;padding:12px 14px;border-left:4px solid var(--blue)}
 .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(80px);background:#2D3748;color:#fff;padding:9px 19px;border-radius:22px;font-size:13px;font-weight:600;z-index:999;transition:transform 0.3s;white-space:nowrap;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0)}
 @media(max-width:480px){.topic-grid{grid-template-columns:1fr 1fr}.btn-row{flex-direction:column}.stat-grid{grid-template-columns:1fr 1fr}}
@@ -271,7 +272,42 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
         <audio id="audioPlayer" controls></audio>
         <div class="btn-row">
           <button class="btn btn-outline-red" onclick="retryRec()">🔄 다시 말하기</button>
-          <button class="btn btn-green" onclick="goStep3()">✅ 자기평가하기 →</button>
+          <button class="btn btn-blue" onclick="startConversation()">💬 AI 질문 받기 →</button>
+        </div>
+      </div>
+
+      <!-- 대화형 영역 -->
+      <div id="convSection" style="display:none;margin-top:12px">
+        <!-- 대화 히스토리 -->
+        <div id="convHistory" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;max-height:280px;overflow-y:auto"></div>
+        <!-- 로딩 -->
+        <div class="ai-loading" id="questionLoading" style="display:none">
+          <div class="spinner"></div>AI가 생각 중이에요...
+        </div>
+        <!-- 현재 질문 -->
+        <div id="currentQBox" style="display:none;background:linear-gradient(135deg,#EBF8FF,#E6FFFA);border-radius:11px;padding:12px 14px;margin-bottom:10px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <div style="font-size:10px;font-weight:700;color:var(--blue-dark);text-transform:uppercase">🤖 AI 질문</div>
+            <button onclick="speakQuestion()" style="background:var(--blue);color:#fff;border:none;border-radius:7px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer">🔊 듣기</button>
+          </div>
+          <div id="aiQuestion" style="font-size:14px;font-weight:700;color:var(--text);line-height:1.5"></div>
+          <div id="aiQuestionKo" style="font-size:12px;color:var(--text-soft);margin-top:4px"></div>
+        </div>
+        <!-- 학생 답변 녹음 -->
+        <div id="convRecArea" style="display:none">
+          <div class="rec-center" style="padding:4px 0;gap:8px">
+            <button class="rec-btn" id="convRecBtn" onclick="toggleConvRec()" style="width:60px;height:60px;font-size:22px">🎤</button>
+            <div class="rec-hint" id="convRecHint">버튼을 누르고 질문에 답해봐! 🗣️</div>
+          </div>
+          <div class="tr-area" id="convTranscript" style="margin-top:8px;min-height:44px">
+            <span class="tp">여기에 네 답변이 나타날 거야 ✨</span>
+          </div>
+          <div id="convBtnRow" style="display:none;margin-top:8px">
+            <div class="btn-row">
+              <button class="btn btn-outline" onclick="nextConvTurn()" id="btnNextTurn">💬 계속 대화하기</button>
+              <button class="btn btn-green" onclick="goStep3()">✅ 자기평가하기 →</button>
+            </div>
+          </div>
         </div>
       </div>
       <button class="back-btn" onclick="goStep1()">← 주제 바꾸기</button>
@@ -432,7 +468,7 @@ const EVAL_ITEMS=[
 ];
 const SL=['','아직 어려워요','조금 됐어요','보통이에요','잘 됐어요','아주 잘 됐어요!'];
 
-let S={mode:'free',topicIdx:-1,attemptCount:0,scores:{},transcript:'',mediaRecorder:null,isRecording:false,timerInterval:null,timerSec:0,recognition:null,audioBlob:null,lastFeedback:null,lastScore:0};
+let S={mode:'free',topicIdx:-1,attemptCount:0,scores:{},transcript:'',mediaRecorder:null,isRecording:false,timerInterval:null,timerSec:0,recognition:null,audioBlob:null,lastFeedback:null,lastScore:0,convTranscript:'',convRecording:false,convRecognition:null,convMediaRecorder:null,aiQuestion:'',aiQuestionKo:''};
 let scChart=null,atChart=null;
 
 function curList(){return S.mode==='unit'?UNIT_TOPICS:FREE_TOPICS;}
@@ -627,6 +663,8 @@ function retryRec(){
   document.getElementById('recHint').textContent='버튼을 누르고 영어로 말해봐! 🗣️';
   document.getElementById('transcriptArea').innerHTML='<span class="tp">여기에 네가 말한 내용이 나타날 거야 ✨</span>';
   document.getElementById('audioSection').classList.remove('show');
+  document.getElementById('convSection').style.display='none';
+  S.convTranscript='';S.aiQuestion='';S.aiQuestionKo='';
 }
 
 function updateDots(){for(let i=1;i<=3;i++)document.getElementById('d'+i).classList.toggle('done',i<=S.attemptCount);}
@@ -650,9 +688,9 @@ async function getFeedback(){
   const avg=(Object.values(S.scores).reduce((a,b)=>a+b,0)/EVAL_ITEMS.length).toFixed(1);
   const detail=EVAL_ITEMS.map(item=>item.label+': '+S.scores[item.id]+'/5').join(', ');
 
-  const sys='You are a warm English speech coach for Korean 5th graders (age 11).\nRespond ONLY in this exact format:\nSCORE: [integer 0-100]\nGOOD: [2-3 specific praises mentioning actual phrases the student used]\nIMPROVE: [1-2 gentle specific improvements with HOW to fix them]\nEXAMPLE: [rewrite their sentence better, or give a model sentence with Korean translation in parentheses]\nNEXT: [one exciting specific challenge for next attempt]\nCHEER: [one warm Korean encouragement sentence]';
+  const sys='You are an expert English speech coach for Korean 5th graders (age 11).\nCRITICAL SCORING RULE: Score ONLY based on what the student actually said. NEVER let self-evaluation affect the SCORE.\nSCORING: 90-100=3+expressions+full sentences, 75-89=2expressions, 60-74=1expression short, 40-59=very short/errors, 20-39=single words, 0-19=silent. Under 3 words=below 30 no exceptions.\nUSE self-eval ONLY for tone: low confidence->warm cheer, low fluency->flow tips, low accuracy->grammar fix, low content->suggest more, high scores->praise that skill.\nConsider both free speech AND conversation.\nRespond ONLY:\nSCORE: [integer 0-100 based ONLY on speech]\nGOOD: [quote actual words, 2-3 praises]\nIMPROVE: [1-2 gentle fixes with exact correction]\nEXAMPLE: [model sentence + Korean translation]\nNEXT: [specific challenge for weakest area]\nCHEER: [warm Korean encouragement]';
 
-  const usr='Topic: '+topic.emoji+' '+topic.label.replace('\n',' — ')+'\nPrompt: '+topic.prompt+'\nStudent said: "'+(S.transcript||'(음성 없음 — 발화 시도함)')+'"'+'\nAttempts: '+S.attemptCount+'회  Duration: '+S.timerSec+'초\nSelf-eval: '+detail+' (avg: '+avg+'/5)\nComment: "'+(comment||'없음')+'"';
+  const convSummary=convHistory.length?'\n[CONVERSATION]\n'+convHistory.map(h=>(h.role==='ai'?'AI: ':'Student: ')+h.text).join('\n'):'';const usr='Topic: '+topic.emoji+' '+topic.label.replace('\n',' — ')+'\nPrompt: '+topic.prompt+'\n[FREE SPEECH] "'+(S.transcript||'(no speech)')+'"'+convSummary+'\nAttempts: '+S.attemptCount+' Duration: '+S.timerSec+'s\nSelf-eval(reference only,NOT for scoring): '+detail+' avg:'+avg+'/5\nComment: "'+(comment||'none')+'"';
 
   const key=document.getElementById('apiKey').value.trim()||EMBED_KEY;
   try{
@@ -858,6 +896,9 @@ function resetAll(){
   updateDots();
   document.getElementById('feedbackContent').innerHTML='<div style="text-align:center;padding:26px;color:var(--text-soft);font-size:13px">STEP 3에서 자기평가 후 AI 피드백을 받아봐! 🌟</div>';
   document.getElementById('afterFeedback').style.display='none';
+  document.getElementById('convSection').style.display='none';
+  document.getElementById('convAudioWrap').style.display='none';
+  S.convTranscript='';S.aiQuestion='';S.aiQuestionKo='';
   openStep(1);document.getElementById('body1').classList.remove('hidden');
 }
 
@@ -883,6 +924,238 @@ function openApiSetting(){
   if(saved) document.getElementById('apiKeyInput').value = saved;
   document.getElementById('apiStatus').innerHTML='';
   document.getElementById('apiModal').classList.add('open');
+}
+
+
+// ── 대화형 말하기 ──
+let convHistory = []; // {role:'ai'|'student', text:string}
+let convTurn = 0;
+const MAX_TURNS = 3;
+
+function speakQuestion(){
+  const q = S.aiQuestion;
+  if(!q) return;
+  if('speechSynthesis' in window){
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(q);
+    utter.lang = 'en-US';
+    utter.rate = 0.85;
+    utter.pitch = 1;
+    // 영어 목소리 우선 선택
+    const voices = window.speechSynthesis.getVoices();
+    const enVoice = voices.find(v=>v.lang.startsWith('en'));
+    if(enVoice) utter.voice = enVoice;
+    window.speechSynthesis.speak(utter);
+  } else {
+    toast('이 브라우저는 음성 지원이 안 돼요 😢');
+  }
+}
+
+function addConvBubble(role, text, koText=''){
+  const history = document.getElementById('convHistory');
+  const isAI = role === 'ai';
+  const div = document.createElement('div');
+  div.style.cssText = 'display:flex;gap:8px;align-items:flex-start;'+(isAI?'':'flex-direction:row-reverse');
+  div.innerHTML = '<div style="font-size:20px;flex-shrink:0">'+(isAI?'🤖':'👤')+'</div>'
+    +'<div style="max-width:85%">'
+    +'<div style="background:'+(isAI?'linear-gradient(135deg,#EBF8FF,#E6FFFA)':'linear-gradient(135deg,#E6FFFA,#F0FFF4)')+';border-radius:'+(isAI?'4px 12px 12px 12px':'12px 4px 12px 12px')+';padding:9px 12px;font-size:13px;font-weight:600;color:var(--text);line-height:1.5">'+text+'</div>'
+    +(koText?'<div style="font-size:11px;color:var(--text-soft);margin-top:3px;padding:0 4px">'+koText+'</div>':'')
+    +'</div>';
+  history.appendChild(div);
+  history.scrollTop = history.scrollHeight;
+}
+
+async function startConversation(){
+  if(!S.audioBlob){toast('먼저 말하기를 해봐! 🎤');return;}
+  convHistory=[];convTurn=0;
+  S.convTranscript='';
+  document.getElementById('convHistory').innerHTML='';
+  document.getElementById('convSection').style.display='block';
+  document.getElementById('convBtnRow').style.display='none';
+  document.getElementById('convTranscript').innerHTML='<span class="tp">여기에 네 답변이 나타날 거야 ✨</span>';
+
+  // 학생 자유발언을 첫 버블로 추가
+  if(S.transcript) addConvBubble('student', S.transcript);
+
+  await askAIQuestion();
+}
+
+async function askAIQuestion(){
+  const topic=curList()[S.topicIdx];
+  document.getElementById('questionLoading').style.display='flex';
+  document.getElementById('currentQBox').style.display='none';
+  document.getElementById('convRecArea').style.display='none';
+
+  const key=document.getElementById('apiKey').value.trim()||EMBED_KEY;
+
+  // 대화 히스토리로 컨텍스트 구성
+  const historyText = convHistory.map(h=>(h.role==='ai'?'AI: ':'Student: ')+h.text).join('\n');
+
+  const sentences = topic.sentences ? topic.sentences.join(' / ') : '';
+  const prompt = 'You are an English teacher having a conversation with a Korean 5th grader.'+
+    '\nLesson topic: '+topic.label.replace('\n',' - ')+
+    '\nKey expressions to practice: '+(topic.keywords?.join(', ')||'')+
+    '\nExample sentences from textbook: '+sentences+
+    '\nConversation so far:\n'+(historyText||'(just started)')+
+    '\nTurn '+(convTurn+1)+' of '+MAX_TURNS+'.'+
+    '\nCRITICAL: Your question MUST be directly about this lesson topic only. Use or lead to the exact key expressions. NEVER ask generic questions like Can you say more or What do you like. Always ask something specific to the topic keywords and sentences above. For free topics, ask naturally about the specific subject.'+
+    '\nTurn 1: Ask the main topic question (e.g. if topic is Where Are You From, ask exactly that).'+
+    '\nTurn 2: Ask a follow-up using another key expression from the list.'+
+    '\nTurn 3: Ask something that helps student use the example sentences.'+
+    '\nKeep it simple, encouraging, and stay strictly on this lesson topic.'+
+    '\nFormat (ONLY this, nothing else):\nQ: [question in English]\nKO: [Korean translation]';
+
+  try{
+    if(key){
+      const res=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+        body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:150,messages:[{role:'user',content:prompt}]})
+      });
+      const data=await res.json();
+      const txt=data.content?.[0]?.text||'';
+      const qm=txt.match(/Q:\s*(.+)/);
+      const km=txt.match(/KO:\s*(.+)/);
+      S.aiQuestion=qm?qm[1].trim():(topic.sentences?.[convTurn]||'Tell me more!');
+      S.aiQuestionKo=km?km[1].trim():'더 말해줘요!';
+    }else{
+      await new Promise(r=>setTimeout(r,600));
+      // 단원/주제별 핵심 표현 기반 기본 질문
+      const kw = topic.keywords || [];
+      const sent = topic.sentences || [];
+      const defaultSets = [
+        // 턴 0: 핵심 첫 질문
+        { q: sent[0] ? sent[0].replace(/___\./g,'blah blah?').replace(/___/g,'blah blah') : (kw[0]||'Tell me about yourself') + '?',
+          ko: '첫 번째 질문이에요!' },
+        // 턴 1: 두 번째 핵심 표현 변형
+        { q: sent[1] ? sent[1].replace(/___\./g,'blah blah?').replace(/___/g,'blah blah') : 'Can you use "' + (kw[1]||kw[0]||'more') + '" in a sentence?',
+          ko: '이번엔 다른 표현으로 말해봐요!' },
+        // 턴 2: 세 번째 핵심 표현 또는 이어지는 질문
+        { q: sent[2] ? sent[2].replace(/___\./g,'blah blah?').replace(/___/g,'blah blah') : 'Can you tell me more using "' + (kw[2]||kw[0]||'because') + '"?',
+          ko: '조금 더 자세히 말해봐요!' }
+      ];
+      const dq = defaultSets[convTurn] || defaultSets[0];
+      S.aiQuestion = dq.q;
+      S.aiQuestionKo = dq.ko;
+    }
+
+    // 버블 추가
+    addConvBubble('ai', S.aiQuestion, S.aiQuestionKo);
+    convHistory.push({role:'ai',text:S.aiQuestion});
+
+    // 질문 표시 + TTS 자동 재생
+    document.getElementById('aiQuestion').textContent=S.aiQuestion;
+    document.getElementById('aiQuestionKo').textContent=S.aiQuestionKo;
+    document.getElementById('questionLoading').style.display='none';
+    document.getElementById('currentQBox').style.display='block';
+    document.getElementById('convRecArea').style.display='block';
+    document.getElementById('convBtnRow').style.display='none';
+    document.getElementById('convTranscript').innerHTML='<span class="tp">여기에 네 답변이 나타날 거야 ✨</span>';
+
+    // 자동 TTS
+    setTimeout(()=>speakQuestion(), 400);
+    toast('🔊 AI가 질문했어요! 잘 듣고 답해봐!');
+  }catch(e){
+    // catch: 단원 핵심 표현 기반 기본 질문
+    const kw2 = topic.keywords || [];
+    const sent2 = topic.sentences || [];
+    const catchSets = [
+      { q: sent2[0] ? sent2[0].replace(/___\./g,'blah blah?').replace(/___/g,'blah blah') : (kw2[0]||'Tell me')+' ?', ko: '첫 번째 질문이에요!' },
+      { q: sent2[1] ? sent2[1].replace(/___\./g,'blah blah?').replace(/___/g,'blah blah') : 'Can you use "' + (kw2[1]||kw2[0]||'more') + '"?', ko: '다른 표현으로 말해봐요!' },
+      { q: sent2[2] ? sent2[2].replace(/___\./g,'blah blah?').replace(/___/g,'blah blah') : 'Tell me more about "' + (kw2[2]||kw2[0]||'this topic') + '"!', ko: '더 자세히 말해봐요!' }
+    ];
+    const cq = catchSets[convTurn] || catchSets[0];
+    S.aiQuestion = cq.q;
+    S.aiQuestionKo = cq.ko;
+    addConvBubble('ai',S.aiQuestion,S.aiQuestionKo);
+    convHistory.push({role:'ai',text:S.aiQuestion});
+    document.getElementById('aiQuestion').textContent=S.aiQuestion;
+    document.getElementById('aiQuestionKo').textContent=S.aiQuestionKo;
+    document.getElementById('questionLoading').style.display='none';
+    document.getElementById('currentQBox').style.display='block';
+    document.getElementById('convRecArea').style.display='block';
+    setTimeout(()=>speakQuestion(),400);
+  }
+}
+
+async function nextConvTurn(){
+  // 현재 답변 저장
+  const ans = S.convTranscript||'(답변 없음)';
+  addConvBubble('student', ans);
+  convHistory.push({role:'student',text:ans});
+  S.convTranscript += ' '+ans;
+  convTurn++;
+
+  if(convTurn>=MAX_TURNS){
+    toast('🎉 대화 완료! 자기평가하러 가봐!');
+    document.getElementById('convRecArea').style.display='none';
+    document.getElementById('currentQBox').style.display='none';
+    document.getElementById('convBtnRow').style.display='none';
+    // 자기평가 버튼만 보여주기
+    const endDiv=document.createElement('div');
+    endDiv.style.marginTop='10px';
+    endDiv.innerHTML='<button class="btn btn-green btn-full" onclick="goStep3()">✅ 대화 완료! 자기평가하기 →</button>';
+    document.getElementById('convSection').appendChild(endDiv);
+    return;
+  }
+  // 다음 질문
+  S.convTranscript='';
+  document.getElementById('convBtnRow').style.display='none';
+  document.getElementById('convTranscript').innerHTML='<span class="tp">여기에 네 답변이 나타날 거야 ✨</span>';
+  await askAIQuestion();
+}
+
+function toggleConvRec(){
+  if(S.convRecording)stopConvRec();else startConvRec();
+}
+
+async function startConvRec(){
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    S.convRecording=true;
+    const chunks=[];
+    S.convMediaRecorder=new MediaRecorder(stream);
+    S.convMediaRecorder.ondataavailable=e=>chunks.push(e.data);
+    S.convMediaRecorder.onstop=()=>{
+      const blob=new Blob(chunks,{type:'audio/webm'});
+      document.getElementById('convAudioPlayer').src=URL.createObjectURL(blob);
+      document.getElementById('convAudioWrap').style.display='block';
+    };
+    S.convMediaRecorder.start();
+    // SR
+    const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+    if(SR){
+      S.convRecognition=new SR();S.convRecognition.lang='en-US';S.convRecognition.continuous=true;S.convRecognition.interimResults=true;
+      S.convTranscript='';
+      S.convRecognition.onresult=e=>{
+        let final='',interim='';
+        for(let i=0;i<e.results.length;i++){if(e.results[i].isFinal)final+=e.results[i][0].transcript+' ';else interim+=e.results[i][0].transcript;}
+        S.convTranscript=final.trim();
+        document.getElementById('convTranscript').innerHTML=(final?'<span>'+final+'</span>':'')+(interim?'<span style="color:#A0AEC0">'+interim+'</span>':'');
+      };
+      S.convRecognition.onerror=()=>{};
+      S.convRecognition.start();
+    }
+    document.getElementById('convRecBtn').textContent='⏹';
+    document.getElementById('convRecBtn').classList.add('on');
+    document.getElementById('convRecHint').textContent='답하는 중... 끝나면 다시 눌러봐! ⏹';
+    document.getElementById('convAudioWrap').style.display='none';
+  }catch(e){toast('마이크 권한이 필요해요!');}
+}
+
+function stopConvRec(){
+  S.convRecording=false;
+  if(S.convRecognition){try{S.convRecognition.stop();}catch(e){}}
+  if(S.convMediaRecorder?.state!=='inactive'){S.convMediaRecorder.stop();S.convMediaRecorder.stream.getTracks().forEach(t=>t.stop());}
+  document.getElementById('convRecBtn').textContent='🎤';
+  document.getElementById('convRecBtn').classList.remove('on');
+  document.getElementById('convRecHint').textContent='잘했어! 계속 대화하거나 자기평가하러 가봐! ✅';
+  // 남은 턴 여부에 따라 버튼 표시
+  const remaining = MAX_TURNS - convTurn - 1;
+  const nextBtn = document.getElementById('btnNextTurn');
+  if(nextBtn) nextBtn.textContent = remaining>0 ? '💬 계속 대화하기 ('+(remaining)+'번 남음)' : '💬 마지막 대화';
+  document.getElementById('convBtnRow').style.display='block';
+  toast('답변 완료! 계속 대화하거나 자기평가로 가봐!');
 }
 
 function toast(msg){
