@@ -14,11 +14,11 @@
   --border:#BEE3F8;--radius:16px;--shadow:0 4px 20px rgba(74,144,226,0.13);
 }
 body{font-family:'Segoe UI','Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:60px}
-/* HEADER */
 .header{background:linear-gradient(135deg,#2B6CB0,#4A90E2,#48BB78);color:#fff;text-align:center;padding:13px 16px 9px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.15);position:relative}
 .header-title{font-size:23px;font-weight:900;letter-spacing:-0.5px}
 .header-title span{color:#F6E05E}
 .header-sub{font-size:11px;opacity:0.85;margin-top:1px}
+.header-key-btn{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);color:#fff;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit}
 /* TALK BAR */
 .talk-bar{background:#fff;border-bottom:2px solid var(--border);display:flex;align-items:center;justify-content:center;position:sticky;top:60px;z-index:90;box-shadow:0 1px 6px rgba(0,0,0,0.06)}
 .talk-step{flex:1;text-align:center;padding:7px 4px;font-size:10px;font-weight:700;color:var(--text-soft);border-bottom:3px solid transparent;transition:all 0.2s;cursor:default}
@@ -94,20 +94,22 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
 .dot.done{background:var(--green)}
 /* BTNS */
 .btn{flex:1;padding:10px 9px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;border:2px solid transparent;transition:all 0.15s;font-family:inherit;text-align:center}
-.btn-blue{background:var(--blue);color:#fff}
-.btn-blue:hover{background:var(--blue-dark)}
-.btn-green{background:var(--green);color:#fff}
-.btn-green:hover{background:var(--green-dark)}
-.btn-outline{background:#fff;border-color:var(--blue);color:var(--blue)}
-.btn-outline:hover{background:var(--blue);color:#fff}
-.btn-outline-red{background:#fff;border-color:#FC8181;color:#E53E3E}
-.btn-outline-red:hover{background:#FC8181;color:#fff}
-.btn-purple{background:var(--purple);color:#fff}
-.btn-purple:hover{background:#805AD5}
-.btn-orange{background:var(--orange);color:#fff}
+.btn-blue{background:var(--blue);color:#fff}.btn-blue:hover{background:var(--blue-dark)}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{background:var(--green-dark)}
+.btn-outline{background:#fff;border-color:var(--blue);color:var(--blue)}.btn-outline:hover{background:var(--blue);color:#fff}
+.btn-outline-red{background:#fff;border-color:#FC8181;color:#E53E3E}.btn-outline-red:hover{background:#FC8181;color:#fff}
+.btn-purple{background:var(--purple);color:#fff}.btn-purple:hover{background:#805AD5}
 .btn-full{width:100%;flex:none;margin-top:9px}
 .btn-lg{padding:13px;font-size:14px}
 .btn:disabled{opacity:0.5;cursor:not-allowed}
+/* CONV */
+.conv-bubble-wrap{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px}
+.conv-bubble-wrap.student{flex-direction:row-reverse}
+.conv-bubble{max-width:85%;border-radius:12px;padding:9px 12px;font-size:13px;font-weight:600;color:var(--text);line-height:1.5}
+.conv-bubble.ai{background:linear-gradient(135deg,#EBF8FF,#E6FFFA);border-radius:4px 12px 12px 12px}
+.conv-bubble.student{background:linear-gradient(135deg,#E6FFFA,#F0FFF4);border-radius:12px 4px 12px 12px}
+.conv-ko{font-size:11px;color:var(--text-soft);margin-top:3px;padding:0 4px}
+.conv-q-box{background:linear-gradient(135deg,#EBF8FF,#E6FFFA);border-radius:11px;padding:12px 14px;margin-bottom:10px}
 /* EVAL */
 .eval-list{display:flex;flex-direction:column;gap:11px}
 .eval-ih{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
@@ -132,7 +134,7 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
 .ai-bar{height:100%;border-radius:20px;background:linear-gradient(to right,var(--blue),var(--green));transition:width 0.8s cubic-bezier(0.4,0,0.2,1)}
 .ai-sec{margin-bottom:11px}
 .ai-sec:last-child{margin-bottom:0}
-.ai-sec-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;display:flex;align-items:center;gap:4px}
+.ai-sec-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
 .ai-sec-title.good{color:#276749}
 .ai-sec-title.improve{color:#744210}
 .ai-sec-title.example{color:#553C9A}
@@ -140,19 +142,18 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
 .ai-sec-body{font-size:13px;line-height:1.75;color:var(--text)}
 .ai-cheer{background:linear-gradient(135deg,#FFFDE7,#FEF3C7);border-radius:9px;padding:10px 12px;font-size:14px;font-weight:700;color:#744210;text-align:center;margin-top:9px}
 .back-btn{background:none;border:none;color:var(--blue);font-size:12px;font-weight:600;cursor:pointer;padding:6px 0;font-family:inherit;display:flex;align-items:center;gap:4px}
-.back-btn:hover{text-decoration:underline}
-/* GROWTH / DASHBOARD */
-.sec-title{font-size:13px;font-weight:800;color:var(--text-soft);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+/* GROWTH */
+.sec-title{font-size:13px;font-weight:800;color:var(--text-soft);margin-bottom:10px}
 .rec-item{background:var(--card);border-radius:11px;padding:12px 14px;border:2px solid var(--border);margin-bottom:9px}
 .rec-item-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px}
 .rec-item-name{font-size:13px;font-weight:800}
 .rec-item-date{font-size:10px;color:var(--text-soft)}
-.rec-item-topic{font-size:11px;color:var(--blue);font-weight:600;margin-bottom:4px}
 .rc-chips{display:flex;gap:4px;flex-wrap:wrap}
 .rc{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px}
 .rc-s{background:#EBF8FF;color:var(--blue-dark)}
 .rc-a{background:#E6FFFA;color:var(--green-dark)}
 .rc-e{background:#F5F3FF;color:#553C9A}
+/* DASHBOARD */
 .stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:12px}
 .stat-box{background:var(--card);border-radius:11px;padding:13px;border:2px solid var(--border);text-align:center}
 .stat-val{font-size:26px;font-weight:900;line-height:1;margin-bottom:3px}
@@ -166,7 +167,6 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
 .dash-table th{background:#EBF8FF;padding:6px 9px;text-align:left;font-weight:700;color:var(--blue-dark);border-bottom:2px solid var(--border)}
 .dash-table td{padding:7px 9px;border-bottom:1px solid var(--border);vertical-align:middle}
 .dash-table tr:last-child td{border-bottom:none}
-.dash-table tr:hover td{background:#F7FAFC}
 .empty-state{text-align:center;padding:36px 16px;color:var(--text-soft);font-size:13px}
 .empty-icon{font-size:38px;margin-bottom:9px}
 /* MODAL */
@@ -183,7 +183,6 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
 .rpt-score{font-size:38px;font-weight:900;color:var(--blue)}
 .rpt-div{height:1px;background:var(--border);margin:12px 0}
 /* TOAST */
-.conv-bubble{background:linear-gradient(135deg,#EBF8FF,#E6FFFA);border-radius:11px;padding:12px 14px;border-left:4px solid var(--blue)}
 .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(80px);background:#2D3748;color:#fff;padding:9px 19px;border-radius:22px;font-size:13px;font-weight:600;z-index:999;transition:transform 0.3s;white-space:nowrap;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0)}
 @media(max-width:480px){.topic-grid{grid-template-columns:1fr 1fr}.btn-row{flex-direction:column}.stat-grid{grid-template-columns:1fr 1fr}}
@@ -195,10 +194,10 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
 <div class="header">
   <div class="header-title">TALK<span>:</span>TALK</div>
   <div class="header-sub">✨ 초등 5학년 영어 말하기 — AI 스피치 코치</div>
-  <button onclick="openApiSetting()" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);color:#fff;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">🔑 교사 설정</button>
+  <button class="header-key-btn" onclick="openApiSetting()">🔑 교사 설정</button>
 </div>
 
-<div class="talk-bar" id="talkBar">
+<div class="talk-bar">
   <div class="talk-step active" id="ts-T"><span class="tl">T</span>Think</div>
   <div class="talk-sep"></div>
   <div class="talk-step" id="ts-A"><span class="tl">A</span>Attempt</div>
@@ -214,7 +213,7 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
   <button class="nav-tab" onclick="switchTab('dashboard')" id="nt-dashboard">👩‍🏫 교사 대시보드</button>
 </div>
 
-<!-- PRACTICE TAB -->
+<!-- PRACTICE -->
 <div id="tab-practice">
 <div class="main">
   <div class="step-card">
@@ -226,7 +225,7 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
     </div>
   </div>
 
-  <div class="step-card" id="card1">
+  <div class="step-card">
     <div class="step-header" onclick="toggleStep(1)">
       <div class="step-icon">🗂️</div>
       <div class="step-title">오늘 말해볼 주제를 골라봐!</div>
@@ -235,12 +234,12 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
     <div class="step-body" id="body1">
       <div class="mode-toggle">
         <button class="mode-btn active" id="modeBtnFree" onclick="setMode('free')"><span class="me">🗣️</span>자유 주제</button>
-        <button class="mode-btn" id="modeBtnUnit" onclick="setMode('unit')"><span class="me">📘</span>교과서 단원 복습</button>
+        <button class="mode-btn" id="modeBtnUnit" onclick="setMode('unit')"><span class="me">📘</span>교과서 단원</button>
       </div>
       <div class="topic-grid" id="topicGrid"></div>
       <div class="topic-grid" id="unitGrid" style="display:none"></div>
       <div class="ex-box" id="exampleBox">
-        <div class="ex-label" id="exLabel">🎯 오늘의 말하기 과제</div>
+        <div class="ex-label">🎯 오늘의 말하기 과제</div>
         <div class="ex-prompt" id="exPrompt"></div>
         <div id="exSentences"></div>
         <div class="goal-chips" id="goalChips"></div>
@@ -249,7 +248,7 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
     </div>
   </div>
 
-  <div class="step-card" id="card2">
+  <div class="step-card">
     <div class="step-header" onclick="toggleStep(2)">
       <div class="step-icon">🎤</div>
       <div class="step-title">이제 영어로 말해봐!</div>
@@ -263,58 +262,53 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
       </div>
       <div class="att-row">
         <span>도전 횟수</span>
-        <div class="att-dots">
-          <div class="dot" id="d1"></div><div class="dot" id="d2"></div><div class="dot" id="d3"></div>
-        </div>
+        <div class="att-dots"><div class="dot" id="d1"></div><div class="dot" id="d2"></div><div class="dot" id="d3"></div></div>
       </div>
       <div class="tr-area" id="transcriptArea"><span class="tp">여기에 네가 말한 내용이 나타날 거야 ✨</span></div>
       <div class="audio-sec" id="audioSection">
         <audio id="audioPlayer" controls></audio>
         <div class="btn-row">
           <button class="btn btn-outline-red" onclick="retryRec()">🔄 다시 말하기</button>
-          <button class="btn btn-blue" onclick="startConversation()">💬 AI 질문 받기 →</button>
+          <button class="btn btn-blue" onclick="startConversation()">💬 AI 대화하기 →</button>
         </div>
       </div>
+      <button class="back-btn" onclick="goStep1()">← 주제 바꾸기</button>
 
       <!-- 대화형 영역 -->
-      <div id="convSection" style="display:none;margin-top:12px">
-        <!-- 대화 히스토리 -->
-        <div id="convHistory" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;max-height:280px;overflow-y:auto"></div>
-        <!-- 로딩 -->
-        <div class="ai-loading" id="questionLoading" style="display:none">
-          <div class="spinner"></div>AI가 생각 중이에요...
+      <div id="convSection" style="display:none;margin-top:14px">
+        <div style="font-size:11px;font-weight:700;color:var(--blue-dark);margin-bottom:8px;display:flex;align-items:center;gap:6px">
+          💬 AI 대화 <span style="background:var(--blue);color:#fff;border-radius:20px;padding:1px 8px;font-size:10px" id="convTurnBadge">1/3</span>
         </div>
-        <!-- 현재 질문 -->
-        <div id="currentQBox" style="display:none;background:linear-gradient(135deg,#EBF8FF,#E6FFFA);border-radius:11px;padding:12px 14px;margin-bottom:10px">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-            <div style="font-size:10px;font-weight:700;color:var(--blue-dark);text-transform:uppercase">🤖 AI 질문</div>
-            <button onclick="speakQuestion()" style="background:var(--blue);color:#fff;border:none;border-radius:7px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer">🔊 듣기</button>
+        <div id="convHistory" style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;max-height:260px;overflow-y:auto"></div>
+        <div class="ai-loading" id="questionLoading" style="display:none"><div class="spinner"></div>AI가 질문 만드는 중...</div>
+        <div id="currentQBox" style="display:none">
+          <div class="conv-q-box">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+              <div style="font-size:10px;font-weight:700;color:var(--blue-dark);text-transform:uppercase">🤖 AI 질문</div>
+              <button onclick="speakQuestion()" style="background:var(--blue);color:#fff;border:none;border-radius:7px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">🔊 듣기</button>
+            </div>
+            <div id="aiQuestion" style="font-size:14px;font-weight:700;color:var(--text);line-height:1.5"></div>
+            <div id="aiQuestionKo" style="font-size:11px;color:var(--text-soft);margin-top:3px"></div>
           </div>
-          <div id="aiQuestion" style="font-size:14px;font-weight:700;color:var(--text);line-height:1.5"></div>
-          <div id="aiQuestionKo" style="font-size:12px;color:var(--text-soft);margin-top:4px"></div>
         </div>
-        <!-- 학생 답변 녹음 -->
         <div id="convRecArea" style="display:none">
-          <div class="rec-center" style="padding:4px 0;gap:8px">
-            <button class="rec-btn" id="convRecBtn" onclick="toggleConvRec()" style="width:60px;height:60px;font-size:22px">🎤</button>
+          <div class="rec-center" style="padding:2px 0;gap:8px">
+            <button class="rec-btn" id="convRecBtn" onclick="toggleConvRec()" style="width:58px;height:58px;font-size:20px">🎤</button>
             <div class="rec-hint" id="convRecHint">버튼을 누르고 질문에 답해봐! 🗣️</div>
           </div>
-          <div class="tr-area" id="convTranscript" style="margin-top:8px;min-height:44px">
-            <span class="tp">여기에 네 답변이 나타날 거야 ✨</span>
-          </div>
+          <div class="tr-area" id="convTranscriptArea" style="margin-top:8px;min-height:44px"><span class="tp">여기에 네 답변이 나타날 거야 ✨</span></div>
           <div id="convBtnRow" style="display:none;margin-top:8px">
             <div class="btn-row">
-              <button class="btn btn-outline" onclick="nextConvTurn()" id="btnNextTurn">💬 계속 대화하기</button>
-              <button class="btn btn-green" onclick="goStep3()">✅ 자기평가하기 →</button>
+              <button class="btn btn-outline" onclick="nextConvTurn()" id="btnNextTurn">💬 계속 대화</button>
+              <button class="btn btn-green" onclick="goStep3()">✅ 자기평가 →</button>
             </div>
           </div>
         </div>
       </div>
-      <button class="back-btn" onclick="goStep1()">← 주제 바꾸기</button>
     </div>
   </div>
 
-  <div class="step-card" id="card3">
+  <div class="step-card">
     <div class="step-header" onclick="toggleStep(3)">
       <div class="step-icon">✅</div>
       <div class="step-title">스스로 평가해봐!</div>
@@ -326,21 +320,19 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
         <label style="font-size:11px;font-weight:700;color:var(--text-soft);display:block;margin-bottom:5px">💬 오늘 말하기 소감 (선택)</label>
         <textarea id="evalComment" style="width:100%;border:2px solid var(--border);border-radius:9px;padding:8px 10px;font-size:13px;resize:vertical;min-height:52px;font-family:inherit;outline:none;color:var(--text)" placeholder="오늘 어떠했어? 자유롭게 적어봐!"></textarea>
       </div>
-      <button class="btn btn-blue btn-full btn-lg" onclick="getFeedback()" id="btnFeedback">🤖 AI 피드백 받기</button>
+      <button class="btn btn-blue btn-full btn-lg" onclick="getFeedback()">🤖 AI 피드백 받기</button>
       <button class="back-btn" onclick="goStep2()">← 다시 녹음하기</button>
     </div>
   </div>
 
-  <div class="step-card" id="card4">
+  <div class="step-card">
     <div class="step-header" onclick="toggleStep(4)">
       <div class="step-icon">🧠</div>
       <div class="step-title">AI 피드백이 왔어!</div>
       <div class="step-badge" id="badge4">STEP 4 · Keep Talking</div>
     </div>
     <div class="step-body hidden" id="body4">
-      <div id="feedbackContent">
-        <div style="text-align:center;padding:26px;color:var(--text-soft);font-size:13px">STEP 3에서 자기평가 후 AI 피드백을 받아봐! 🌟</div>
-      </div>
+      <div id="feedbackContent"><div style="text-align:center;padding:26px;color:var(--text-soft);font-size:13px">STEP 3에서 자기평가 후 AI 피드백을 받아봐! 🌟</div></div>
       <div id="afterFeedback" style="display:none">
         <div class="btn-row" style="margin-top:10px">
           <button class="btn btn-purple" onclick="openReport()">📄 학습 리포트</button>
@@ -352,7 +344,7 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
 </div>
 </div>
 
-<!-- GROWTH TAB -->
+<!-- GROWTH -->
 <div id="tab-growth" style="display:none">
 <div class="main">
   <div class="step-card">
@@ -370,7 +362,7 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
 </div>
 </div>
 
-<!-- DASHBOARD TAB -->
+<!-- DASHBOARD -->
 <div id="tab-dashboard" style="display:none">
 <div class="main">
   <div class="step-card">
@@ -389,10 +381,7 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
 <!-- REPORT MODAL -->
 <div class="modal-bg" id="reportModal" onclick="closeReportBg(event)">
   <div class="modal">
-    <div class="modal-hd">
-      <h2>📄 학습 리포트</h2>
-      <button class="modal-close" onclick="closeReport()">×</button>
-    </div>
+    <div class="modal-hd"><h2>📄 학습 리포트</h2><button class="modal-close" onclick="closeReport()">×</button></div>
     <div class="modal-body" id="reportBody"></div>
     <div style="padding:0 18px 18px;display:flex;gap:7px">
       <button class="btn btn-blue" onclick="window.print()">🖨️ 인쇄</button>
@@ -401,23 +390,15 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
   </div>
 </div>
 
-<!-- 교사 API 설정 모달 -->
+<!-- API MODAL -->
 <div class="modal-bg" id="apiModal">
   <div class="modal" style="max-width:400px">
-    <div class="modal-hd">
-      <h2>🔑 교사 API 설정</h2>
-    </div>
+    <div class="modal-hd"><h2>🔑 교사 API 설정</h2></div>
     <div class="modal-body">
-      <p style="font-size:13px;color:var(--text-soft);margin-bottom:14px;line-height:1.6">
-        수업 시작 전 <strong>선생님이 한 번만</strong> 입력하면<br>이 브라우저에 저장돼서 학생들이 바로 사용할 수 있어요!
-      </p>
+      <p style="font-size:13px;color:var(--text-soft);margin-bottom:14px;line-height:1.6">수업 시작 전 <strong>선생님이 한 번만</strong> 입력하면 이 브라우저에 저장돼요!</p>
       <label style="font-size:12px;font-weight:700;color:var(--text-soft);display:block;margin-bottom:6px">Claude API Key</label>
-      <input type="password" id="apiKeyInput"
-        style="width:100%;border:2px solid var(--border);border-radius:9px;padding:9px 12px;font-size:13px;font-family:monospace;outline:none;margin-bottom:6px"
-        placeholder="Anthropic API Key를 붙여넣으세요">
-      <div style="font-size:11px;color:var(--text-soft);margin-bottom:16px">
-        🔒 키는 이 기기의 브라우저에만 저장되며 외부로 전송되지 않아요.
-      </div>
+      <input type="password" id="apiKeyInput" style="width:100%;border:2px solid var(--border);border-radius:9px;padding:9px 12px;font-size:13px;font-family:monospace;outline:none;margin-bottom:6px" placeholder="Anthropic API Key를 붙여넣으세요">
+      <div style="font-size:11px;color:var(--text-soft);margin-bottom:16px">🔒 키는 이 기기의 브라우저에만 저장돼요.</div>
       <div style="display:flex;gap:8px">
         <button class="btn btn-blue" style="flex:2" onclick="saveApiKey()">💾 저장하고 시작하기</button>
         <button class="btn btn-outline" style="flex:1" onclick="closeApiModal()">나중에</button>
@@ -426,38 +407,38 @@ audio{width:100%;margin-bottom:8px;accent-color:var(--blue)}
     </div>
   </div>
 </div>
+
 <div style="display:none"><input type="password" id="apiKey" value=""></div>
 <div class="toast" id="toast"></div>
 
 <script>
-const EMBED_KEY = localStorage.getItem('talktalk_apikey') || '';
 const LS_KEY='talktalk_v3';
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbynhiZH5eaonk_RcZy4tZpdQSnlaVuhYg2499EuAmLGxq75ZfT8HwF-tPF9akmyefe_iw/exec';
 
 const FREE_TOPICS=[
-  {emoji:'👋',label:'자기소개\nMy name is...',prompt:'자신에 대해 소개해봐! 이름, 나이, 좋아하는 것을 영어로 말해봐.',sentences:['Hi! My name is ___.','I am ___ years old.','I like ___ very much.','My favorite ___ is ___.'],goals:['3문장 이상','이름 + 나이','좋아하는 것'],keywords:['My name is','I am','I like']},
-  {emoji:'🍕',label:'음식 / 좋아하는 것\nI like / I love...',prompt:'좋아하는 음식이나 것들을 영어로 말해봐!',sentences:['My favorite food is ___.','I love eating ___ because ___.','I don\'t like ___ very much.','I always eat ___ for breakfast.'],goals:['음식 이름','이유 말하기','3문장 이상'],keywords:['My favorite','I love','because']},
-  {emoji:'🎮',label:'주말 / 취미\nOn weekends, I...',prompt:'주말에 뭐 하는지 영어로 말해봐!',sentences:['On weekends, I usually ___.','I like to ___ with my ___.','My hobby is ___.','I spend ___ hours ___ every week.'],goals:['주말 활동','취미 설명','시간 표현'],keywords:['On weekends','I usually','My hobby']},
-  {emoji:'🏫',label:'학교생활\nMy favorite subject...',prompt:'학교생활에 대해 영어로 말해봐!',sentences:['My favorite subject is ___ because ___.','I go to ___ Elementary School.','I have ___ friends in my class.','After school, I ___.'],goals:['좋아하는 과목','이유 말하기','학교 활동'],keywords:['favorite subject','because','after school']},
-  {emoji:'🚀',label:'장래희망\nI want to be...',prompt:'커서 뭐가 되고 싶은지 영어로 말해봐! 이유도 꼭 말해봐.',sentences:['I want to be a ___ in the future.','I want to be a ___ because ___.','A ___ helps people ___.','To become a ___, I need to ___.'],goals:['직업 말하기','이유 설명','구체적 계획'],keywords:['I want to be','because','future']},
-  {emoji:'✈️',label:'여행 / 가고 싶은 곳\nI want to go to...',prompt:'가고 싶은 나라나 장소를 영어로 말해봐!',sentences:['I want to go to ___ someday.','___ is famous for ___.','I want to visit ___ because ___.','If I go to ___, I will ___.'],goals:['장소 이름','이유 설명','because 사용'],keywords:['I want to go','famous for','because']}
+  {emoji:'👋',label:'자기소개\nMy name is...',prompt:'자신에 대해 소개해봐! 이름, 나이, 좋아하는 것을 영어로 말해봐.',sentences:['Hi! My name is blah blah.','I am blah blah years old.','I like blah blah very much.','My favorite blah blah is blah blah.'],goals:['3문장 이상','이름+나이','좋아하는 것'],keywords:['My name is','I am','I like','My favorite']},
+  {emoji:'🍕',label:'음식/좋아하는 것\nI like / I love...',prompt:'좋아하는 음식이나 것들을 영어로 말해봐!',sentences:['My favorite food is blah blah.','I love eating blah blah because blah blah.','I do not like blah blah very much.','I always eat blah blah for breakfast.'],goals:['음식 이름','이유 말하기','3문장 이상'],keywords:['My favorite','I love','because','always']},
+  {emoji:'🎮',label:'주말/취미\nOn weekends, I...',prompt:'주말에 뭐 하는지 영어로 말해봐!',sentences:['On weekends, I usually blah blah.','I like to blah blah with my blah blah.','My hobby is blah blah.','I spend blah blah hours blah blah every week.'],goals:['주말 활동','취미 설명','시간 표현'],keywords:['On weekends','I usually','My hobby','spend time']},
+  {emoji:'🏫',label:'학교생활\nMy favorite subject...',prompt:'학교생활에 대해 영어로 말해봐!',sentences:['My favorite subject is blah blah because blah blah.','I go to blah blah Elementary School.','I have blah blah friends in my class.','After school, I blah blah.'],goals:['좋아하는 과목','이유 말하기','학교 활동'],keywords:['favorite subject','because','after school','friends']},
+  {emoji:'🚀',label:'장래희망\nI want to be...',prompt:'커서 뭐가 되고 싶은지 영어로 말해봐! 이유도 꼭 말해봐.',sentences:['I want to be a blah blah in the future.','I want to be a blah blah because blah blah.','A blah blah helps people blah blah.','To become a blah blah, I need to blah blah.'],goals:['직업 말하기','이유 설명','구체적 계획'],keywords:['I want to be','in the future','because','helps people']},
+  {emoji:'✈️',label:'여행/가고 싶은 곳\nI want to go to...',prompt:'가고 싶은 나라나 장소를 영어로 말해봐!',sentences:['I want to go to blah blah someday.','Blah blah is famous for blah blah.','I want to visit blah blah because blah blah.','If I go to blah blah, I will blah blah.'],goals:['장소 이름','이유 설명','because 사용'],keywords:['I want to go','famous for','because','If I go']}
 ];
 
 const UNIT_TOPICS=[
-  {unit:'L1',badge:'Lesson 1',semester:1,emoji:'🌍',label:'Lesson 1\nWhere Are You From?',prompt:'어느 나라에서 왔는지 영어로 소개해봐!',sentences:['Where are you from?','I\'m from Korea.','I\'m from ___.','Nice to meet you!'],goals:['나라 이름','I\'m from 사용','인사 표현'],keywords:['Where are you from','I\'m from']},
-  {unit:'L2',badge:'Lesson 2',semester:1,emoji:'📦',label:'Lesson 2\nWhat Are These?',prompt:'주변 물건을 영어로 설명해봐!',sentences:['What is this?','This is a ___.','What are these?','These are ___s.'],goals:['This/These 구별','물건 이름','3문장 이상'],keywords:['What is this','These are']},
-  {unit:'L3',badge:'Lesson 3',semester:1,emoji:'📸',label:'Lesson 3\nCan I Take Pictures?',prompt:'허락을 구하는 표현을 영어로 말해봐!',sentences:['Can I take pictures here?','Can I ___?','Yes, you can. / No, you can\'t.','Thank you so much!'],goals:['Can I 사용','허락 답하기'],keywords:['Can I','Yes, you can']},
-  {unit:'L4',badge:'Lesson 4',semester:1,emoji:'✏️',label:'Lesson 4\nWhose Pen Is This?',prompt:'물건의 주인이 누구인지 영어로 묻고 답해봐!',sentences:['Whose pen is this?','It\'s my pen.','It\'s ___\'s pen.','Whose ___ is this?'],goals:['Whose 질문','소유격 사용'],keywords:['Whose','It\'s mine']},
-  {unit:'L5',badge:'Lesson 5',semester:1,emoji:'🛍️',label:"Lesson 5\nLet's Go Shopping",prompt:'쇼핑할 때 쓰는 표현을 영어로 말해봐!',sentences:['How much is it?','It\'s ___ won.','Can I try this on?','I\'ll take it!'],goals:['가격 묻기','숫자 표현'],keywords:['How much','won']},
-  {unit:'L6',badge:'Lesson 6',semester:1,emoji:'☀️',label:'Lesson 6\nWhat Will You Do This Summer?',prompt:'이번 여름방학에 할 일을 영어로 말해봐!',sentences:['What will you do this summer?','I will ___.','I\'m going to ___.','I can\'t wait!'],goals:['will 사용','여름 계획'],keywords:['I will','this summer']},
-  {unit:'R1',badge:'Review 1',semester:1,emoji:'🔁',review:true,label:'Review 1\n1~6과 복습',prompt:'1~6과 표현 2개 이상을 섞어 말해봐!',sentences:["I'm from ___, and this is my ___.",'Can I ___? Whose ___ is this?','How much? I will buy it!'],goals:['표현 2개 이상','자연스러운 연결'],keywords:["I'm from",'Can I','I will']},
-  {unit:'L7',badge:'Lesson 7',semester:2,emoji:'🍉',label:'Lesson 7\nI Went to a Watermelon Festival',prompt:'지난 방학에 다녀온 곳을 영어로 말해봐!',sentences:['Where did you go?','I went to ___.','I ate ___. / I saw ___.','It was so much fun!'],goals:['과거형 사용','장소/경험'],keywords:['I went to','I ate','It was']},
-  {unit:'L8',badge:'Lesson 8',semester:2,emoji:'🍽️',label:'Lesson 8\nWhat Would You Like?',prompt:'음식점에서 주문하는 표현을 영어로 말해봐!',sentences:['What would you like?','I\'d like ___, please.','Anything else?','That\'s all, thank you.'],goals:['주문 표현','공손한 표현'],keywords:["I'd like",'please']},
-  {unit:'L9',badge:'Lesson 9',semester:2,emoji:'💰',label:'Lesson 9\nThey Are Twenty Thousand Won',prompt:'물건 가격을 영어 숫자로 말해봐!',sentences:['How much are they?','They are ___ won.','That\'s expensive! / That\'s cheap!','I\'ll buy ___.'],goals:['큰 숫자 표현','복수형 가격'],keywords:['How much are they','won']},
-  {unit:'L10',badge:'Lesson 10',semester:2,emoji:'⏰',label:'Lesson 10\nWhat Time Do You Get Up?',prompt:'하루 일과를 영어로 시간과 함께 말해봐!',sentences:['What time do you get up?','I get up at ___.','I go to school at ___.','I go to bed at ___.'],goals:['시간 표현','일과 동사'],keywords:['What time','I get up at']},
-  {unit:'L11',badge:'Lesson 11',semester:2,emoji:'📚',label:'Lesson 11\nMy Favorite Subject Is Math',prompt:'좋아하는 과목과 이유를 영어로 말해봐!',sentences:["What's your favorite subject?",'My favorite subject is ___.','I like it because ___.','It\'s interesting!'],goals:['과목 이름','because 사용'],keywords:['favorite subject','because']},
-  {unit:'L12',badge:'Lesson 12',semester:2,emoji:'🌟',label:'Lesson 12\nWhat Do You Want to Be?',prompt:'미래에 되고 싶은 직업을 영어로 말해봐!',sentences:['What do you want to be?','I want to be a ___.','I want to be a ___ because ___.','I will work hard for my dream.'],goals:['직업 이름','이유 설명'],keywords:['I want to be','because']},
-  {unit:'R2',badge:'Review 2',semester:2,emoji:'🔁',review:true,label:'Review 2\n7~12과 복습',prompt:'7~12과 표현 2개 이상을 섞어 말해봐!',sentences:['I went to ___, and I ate ___.','I\'d like ___. It\'s ___ won.','I get up at ___, I want to be a ___.'],goals:['표현 2개 이상','자연스러운 연결'],keywords:['I went to',"I'd like",'I want to be']}
+  {unit:'L1',badge:'Lesson 1',semester:1,emoji:'🌍',label:'Lesson 1\nWhere Are You From?',prompt:'어느 나라에서 왔는지 영어로 소개해봐!',sentences:['Where are you from?','I am from Korea.','I am from blah blah.','Nice to meet you!'],goals:['나라 이름','I am from 사용','인사 표현'],keywords:['Where are you from','I am from','Nice to meet you']},
+  {unit:'L2',badge:'Lesson 2',semester:1,emoji:'📦',label:'Lesson 2\nWhat Are These?',prompt:'주변 물건을 영어로 설명해봐!',sentences:['What is this?','This is a blah blah.','What are these?','These are blah blahs.'],goals:['This/These 구별','물건 이름','3문장 이상'],keywords:['What is this','These are','This is']},
+  {unit:'L3',badge:'Lesson 3',semester:1,emoji:'📸',label:'Lesson 3\nCan I Take Pictures?',prompt:'허락을 구하는 표현을 영어로 말해봐!',sentences:['Can I take pictures here?','Can I blah blah?','Yes, you can. No, you cannot.','Thank you so much!'],goals:['Can I 사용','허락 답하기'],keywords:['Can I','Yes, you can','No, you cannot']},
+  {unit:'L4',badge:'Lesson 4',semester:1,emoji:'✏️',label:'Lesson 4\nWhose Pen Is This?',prompt:'물건의 주인이 누구인지 영어로 묻고 답해봐!',sentences:['Whose pen is this?','It is my pen.','It is blah blah pen.','Whose blah blah is this?'],goals:['Whose 질문','소유격 사용'],keywords:['Whose','It is mine','It is blah blahs']},
+  {unit:'L5',badge:'Lesson 5',semester:1,emoji:'🛍️',label:'Lesson 5\nLet\'s Go Shopping',prompt:'쇼핑할 때 쓰는 표현을 영어로 말해봐!',sentences:['How much is it?','It is blah blah won.','Can I try this on?','I will take it!'],goals:['가격 묻기','숫자 표현'],keywords:['How much','won','try this on']},
+  {unit:'L6',badge:'Lesson 6',semester:1,emoji:'☀️',label:'Lesson 6\nWhat Will You Do This Summer?',prompt:'이번 여름방학에 할 일을 영어로 말해봐!',sentences:['What will you do this summer?','I will blah blah.','I am going to blah blah.','I cannot wait!'],goals:['will 사용','여름 계획'],keywords:['What will you do','I will','I am going to']},
+  {unit:'R1',badge:'Review 1',semester:1,emoji:'🔁',review:true,label:'Review 1\n1~6과 복습',prompt:'1~6과 표현 2개 이상을 섞어 말해봐!',sentences:['I am from blah blah, and this is my blah blah.','Can I blah blah? Whose blah blah is this?','How much? I will buy it!'],goals:['표현 2개 이상','자연스러운 연결'],keywords:["I am from",'Can I','How much','I will']},
+  {unit:'L7',badge:'Lesson 7',semester:2,emoji:'🍉',label:'Lesson 7\nI Went to a Watermelon Festival',prompt:'지난 방학에 다녀온 곳을 영어로 말해봐!',sentences:['Where did you go?','I went to blah blah.','I ate blah blah. I saw blah blah.','It was so much fun!'],goals:['과거형 사용','장소/경험'],keywords:['I went to','I ate','It was fun']},
+  {unit:'L8',badge:'Lesson 8',semester:2,emoji:'🍽️',label:'Lesson 8\nWhat Would You Like?',prompt:'음식점에서 주문하는 표현을 영어로 말해봐!',sentences:['What would you like?','I would like blah blah, please.','Anything else?','That is all, thank you.'],goals:['주문 표현','공손한 표현'],keywords:['I would like','please','Anything else']},
+  {unit:'L9',badge:'Lesson 9',semester:2,emoji:'💰',label:'Lesson 9\nThey Are Twenty Thousand Won',prompt:'물건 가격을 영어 숫자로 말해봐!',sentences:['How much are they?','They are blah blah won.','That is expensive! That is cheap!','I will buy blah blah.'],goals:['큰 숫자 표현','복수형 가격'],keywords:['How much are they','won','expensive']},
+  {unit:'L10',badge:'Lesson 10',semester:2,emoji:'⏰',label:'Lesson 10\nWhat Time Do You Get Up?',prompt:'하루 일과를 영어로 시간과 함께 말해봐!',sentences:['What time do you get up?','I get up at blah blah.','I go to school at blah blah.','I go to bed at blah blah.'],goals:['시간 표현','일과 동사'],keywords:['What time','I get up at','I go to bed']},
+  {unit:'L11',badge:'Lesson 11',semester:2,emoji:'📚',label:'Lesson 11\nMy Favorite Subject Is Math',prompt:'좋아하는 과목과 이유를 영어로 말해봐!',sentences:['What is your favorite subject?','My favorite subject is blah blah.','I like it because blah blah.','It is interesting!'],goals:['과목 이름','because 사용'],keywords:['favorite subject','because','It is interesting']},
+  {unit:'L12',badge:'Lesson 12',semester:2,emoji:'🌟',label:'Lesson 12\nWhat Do You Want to Be?',prompt:'미래에 되고 싶은 직업을 영어로 말해봐!',sentences:['What do you want to be?','I want to be a blah blah.','I want to be a blah blah because blah blah.','I will work hard for my dream.'],goals:['직업 이름','이유 설명'],keywords:['I want to be','because','dream']},
+  {unit:'R2',badge:'Review 2',semester:2,emoji:'🔁',review:true,label:'Review 2\n7~12과 복습',prompt:'7~12과 표현 2개 이상을 섞어 말해봐!',sentences:['I went to blah blah, and I ate blah blah.','I would like blah blah. It is blah blah won.','I get up at blah blah, I want to be a blah blah.'],goals:['표현 2개 이상','자연스러운 연결'],keywords:['I went to','I would like','I want to be']}
 ];
 
 const EVAL_ITEMS=[
@@ -468,7 +449,11 @@ const EVAL_ITEMS=[
 ];
 const SL=['','아직 어려워요','조금 됐어요','보통이에요','잘 됐어요','아주 잘 됐어요!'];
 
-let S={mode:'free',topicIdx:-1,attemptCount:0,scores:{},transcript:'',mediaRecorder:null,isRecording:false,timerInterval:null,timerSec:0,recognition:null,audioBlob:null,lastFeedback:null,lastScore:0,convTranscript:'',convRecording:false,convRecognition:null,convMediaRecorder:null,aiQuestion:'',aiQuestionKo:''};
+let S={mode:'free',topicIdx:-1,attemptCount:0,scores:{},transcript:'',mediaRecorder:null,isRecording:false,timerInterval:null,timerSec:0,recognition:null,audioBlob:null,lastFeedback:null,lastScore:0};
+let convInterim = '';
+let convHistory=[],convTurn=0,convTranscript='',aiQuestion='',aiQuestionKo='';
+let convRecording=false,convRecognition=null,convMediaRecorder=null;
+const MAX_TURNS=3;
 let scChart=null,atChart=null;
 
 function curList(){return S.mode==='unit'?UNIT_TOPICS:FREE_TOPICS;}
@@ -494,7 +479,7 @@ window.onload=()=>{
     document.getElementById('apiKey').value=urlKey;
     document.getElementById('apiKeyInput').value=urlKey;
     history.replaceState(null,'',location.pathname);
-    setTimeout(()=>toast('✅ AI 피드백 준비 완료! 🎤'),200);
+    setTimeout(()=>toast('✅ AI 피드백 준비 완료! 말하기 연습을 시작해봐! 🎤'),200);
     return;
   }
   const saved=localStorage.getItem('talktalk_apikey');
@@ -506,16 +491,25 @@ window.onload=()=>{
   }
 };
 
+// API 설정
+function saveApiKey(){
+  const key=document.getElementById('apiKeyInput').value.trim();
+  if(!key||!key.startsWith('sk-')){document.getElementById('apiStatus').innerHTML='<span style="color:#E53E3E">⚠️ 올바른 API 키를 입력해주세요</span>';return;}
+  localStorage.setItem('talktalk_apikey',key);
+  document.getElementById('apiKey').value=key;
+  document.getElementById('apiStatus').innerHTML='<span style="color:var(--green)">✅ 저장 완료!</span>';
+  setTimeout(()=>{document.getElementById('apiModal').classList.remove('open');toast('🔑 API 키가 저장됐어요!');},700);
+}
+function closeApiModal(){document.getElementById('apiModal').classList.remove('open');if(!localStorage.getItem('talktalk_apikey'))toast('⚠️ API 키 미설정 — 예시 피드백으로 작동해요.');}
+function openApiSetting(){const s=localStorage.getItem('talktalk_apikey');if(s)document.getElementById('apiKeyInput').value=s;document.getElementById('apiStatus').innerHTML='';document.getElementById('apiModal').classList.add('open');}
+
+// TALK 모형
 function setTalkStep(n){
-  const m={1:'T',2:'A',3:'L',4:'K'};
-  const keys=['T','A','L','K'];
-  const ai=keys.indexOf(m[n]);
-  keys.forEach((k,i)=>{
-    const el=document.getElementById('ts-'+k);
-    el.className='talk-step'+(i<ai?' done':i===ai?' active':'');
-  });
+  const keys=['T','A','L','K'];const ai=n-1;
+  keys.forEach((k,i)=>{const el=document.getElementById('ts-'+k);el.className='talk-step'+(i<ai?' done':i===ai?' active':'');});
 }
 
+// 탭
 function switchTab(tab){
   if(tab==='dashboard'){
     const auth=sessionStorage.getItem('talktalk_teacher');
@@ -535,31 +529,17 @@ function switchTab(tab){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+// 렌더링
 function renderTopics(){
-  document.getElementById('topicGrid').innerHTML=FREE_TOPICS.map((t,i)=>`
-    <button class="topic-chip" onclick="selectTopic(${i})">
-      <span class="te">${t.emoji}</span>${t.label.replace('\n','<br>')}
-    </button>`).join('');
+  document.getElementById('topicGrid').innerHTML=FREE_TOPICS.map((t,i)=>'<button class="topic-chip" onclick="selectTopic('+i+')"><span class="te">'+t.emoji+'</span>'+t.label.replace('\n','<br>')+'</button>').join('');
 }
-
 function renderUnits(){
-  const chip=u=>{
-    const idx=UNIT_TOPICS.indexOf(u);
-    const sub=u.label.split('\n')[1];
-    return `<button class="unit-chip${u.review?' review':''}" onclick="selectTopic(${idx})">
-      <span class="ub">${u.badge}</span><span>${u.emoji} ${sub}</span>
-    </button>`;
-  };
-  const s1=UNIT_TOPICS.filter(u=>u.semester===1);
-  const s2=UNIT_TOPICS.filter(u=>u.semester===2);
-  document.getElementById('unitGrid').innerHTML=
-    `<div style="grid-column:1/-1" class="unit-sem">1학기 (Lesson 1~6)</div>${s1.map(chip).join('')}
-     <div style="grid-column:1/-1" class="unit-sem">2학기 (Lesson 7~12)</div>${s2.map(chip).join('')}`;
+  const chip=u=>{const idx=UNIT_TOPICS.indexOf(u);const sub=u.label.split('\n')[1];return '<button class="unit-chip'+(u.review?' review':'')+'" onclick="selectTopic('+idx+')"><span class="ub">'+u.badge+'</span><span>'+u.emoji+' '+sub+'</span></button>';};
+  const s1=UNIT_TOPICS.filter(u=>u.semester===1);const s2=UNIT_TOPICS.filter(u=>u.semester===2);
+  document.getElementById('unitGrid').innerHTML='<div style="grid-column:1/-1" class="unit-sem">1학기 (Lesson 1~6)</div>'+s1.map(chip).join('')+'<div style="grid-column:1/-1" class="unit-sem">2학기 (Lesson 7~12)</div>'+s2.map(chip).join('');
 }
-
 function setMode(mode){
-  if(S.mode===mode)return;
-  S.mode=mode;S.topicIdx=-1;
+  if(S.mode===mode)return;S.mode=mode;S.topicIdx=-1;
   document.getElementById('modeBtnFree').classList.toggle('active',mode==='free');
   document.getElementById('modeBtnUnit').classList.toggle('active',mode==='unit');
   document.getElementById('topicGrid').style.display=mode==='free'?'grid':'none';
@@ -568,29 +548,17 @@ function setMode(mode){
   document.getElementById('exampleBox').classList.remove('show');
   document.getElementById('btn1').disabled=true;
 }
-
 function renderEvalItems(){
   EVAL_ITEMS.forEach(item=>{S.scores[item.id]=0;});
-  document.getElementById('evalList').innerHTML=EVAL_ITEMS.map(item=>`
-    <div class="eval-item">
-      <div class="eval-ih">
-        <div><div class="eval-il">${item.label}</div><div class="eval-id">${item.desc}</div></div>
-        <div class="score-lbl" id="slabel-${item.id}">—</div>
-      </div>
-      <div class="stars" id="stars-${item.id}">
-        ${[1,2,3,4,5].map(v=>`<button class="star" id="star-${item.id}-${v}" onclick="setScore('${item.id}',${v})">⭐</button>`).join('')}
-      </div>
-    </div>`).join('');
+  document.getElementById('evalList').innerHTML=EVAL_ITEMS.map(item=>'<div class="eval-item"><div class="eval-ih"><div><div class="eval-il">'+item.label+'</div><div class="eval-id">'+item.desc+'</div></div><div class="score-lbl" id="slabel-'+item.id+'">—</div></div><div class="stars" id="stars-'+item.id+'">'+[1,2,3,4,5].map(v=>'<button class="star" id="star-'+item.id+'-'+v+'" onclick="setScore(\''+item.id+'\','+v+')">⭐</button>').join('')+'</div></div>').join('');
 }
 
-function openStep(n){
-  for(let i=1;i<=4;i++){const b=document.getElementById('body'+i);if(b)b.classList.toggle('hidden',i!==n);}
-  S.currentStep=n;setTalkStep(n);
-}
+// 스텝
+function openStep(n){for(let i=1;i<=4;i++){const b=document.getElementById('body'+i);if(b)b.classList.toggle('hidden',i!==n);}setTalkStep(n);}
 function toggleStep(n){document.getElementById('body'+n)?.classList.toggle('hidden');}
 function goStep1(){openStep(1);document.getElementById('body1').classList.remove('hidden');}
 function goStep2(){if(S.topicIdx<0){toast('주제를 먼저 골라봐! 🗂️');return;}openStep(2);}
-function goStep3(){if(!S.audioBlob){toast('먼저 말하기를 해봐! 🎤');return;}openStep(3);}
+function goStep3(){openStep(3);}
 
 function selectTopic(idx){
   S.topicIdx=idx;
@@ -598,14 +566,14 @@ function selectTopic(idx){
   document.querySelectorAll(sel).forEach((c,i)=>c.classList.toggle('selected',i===idx));
   const t=curList()[idx];
   document.getElementById('exPrompt').textContent=t.prompt;
-  document.getElementById('exSentences').innerHTML=t.sentences.map(s=>`<div class="ex-sent">💬 ${s}</div>`).join('');
-  document.getElementById('goalChips').innerHTML=t.goals.map(g=>`<span class="goal-chip">✓ ${g}</span>`).join('');
+  document.getElementById('exSentences').innerHTML=t.sentences.map(s=>'<div class="ex-sent">💬 '+s+'</div>').join('');
+  document.getElementById('goalChips').innerHTML=t.goals.map(g=>'<span class="goal-chip">✓ '+g+'</span>').join('');
   document.getElementById('exampleBox').classList.add('show');
   document.getElementById('btn1').disabled=false;
 }
 
+// 녹음
 async function toggleRec(){if(S.isRecording)stopRec();else await startRec();}
-
 async function startRec(){
   try{
     const stream=await navigator.mediaDevices.getUserMedia({audio:true});
@@ -620,42 +588,55 @@ async function startRec(){
       S.attemptCount=Math.min(S.attemptCount+1,3);updateDots();
     };
     S.mediaRecorder.start();
-    S.timerInterval=setInterval(()=>{
-      S.timerSec++;
-      const m=String(Math.floor(S.timerSec/60)).padStart(2,'0');
-      const s=String(S.timerSec%60).padStart(2,'0');
-      document.getElementById('recTimer').textContent=m+':'+s;
-    },1000);
-    const btn=document.getElementById('recBtn');
-    btn.textContent='⏹';btn.classList.add('on');
+    S.timerInterval=setInterval(()=>{S.timerSec++;const m=String(Math.floor(S.timerSec/60)).padStart(2,'0');const s=String(S.timerSec%60).padStart(2,'0');document.getElementById('recTimer').textContent=m+':'+s;},1000);
+    document.getElementById('recBtn').textContent='⏹';document.getElementById('recBtn').classList.add('on');
     document.getElementById('recHint').textContent='말하는 중... 끝나면 다시 눌러봐! ⏹';
     document.getElementById('transcriptArea').innerHTML='<span class="tp">인식 중... 🎤</span>';
     document.getElementById('audioSection').classList.remove('show');
     startSR();
-  }catch(e){toast('마이크 권한이 필요해요! 🎤 설정에서 허용해줘.');}
+  }catch(e){toast('마이크 권한이 필요해요! 🎤');}
 }
-
 function stopRec(){
+  // interim이 있으면 transcript에 확정 저장
+  if(!S.transcript && S._srInterim) S.transcript=S._srInterim.trim();
   if(S.recognition){try{S.recognition.stop();}catch(e){}}
   if(S.mediaRecorder?.state!=='inactive'){S.mediaRecorder.stop();S.mediaRecorder.stream.getTracks().forEach(t=>t.stop());}
   clearInterval(S.timerInterval);S.isRecording=false;
-  const btn=document.getElementById('recBtn');btn.textContent='🎤';btn.classList.remove('on');
-  document.getElementById('recHint').textContent='잘했어! 녹음을 들어보고 다음 단계로 가봐! 🎉';
+  document.getElementById('recBtn').textContent='🎤';document.getElementById('recBtn').classList.remove('on');
+  if(!S.transcript){
+    document.getElementById('transcriptArea').innerHTML='<span style="color:#FC8181">음성이 인식되지 않았어요. 조금 더 크게 다시 말해볼까요? 🎤</span>';
+    document.getElementById('recHint').textContent='다시 눌러서 말해봐! 🎤';
+  } else {
+    document.getElementById('transcriptArea').innerHTML='<span>'+S.transcript+'</span>';
+    document.getElementById('recHint').textContent='잘했어! 들어보고 AI와 대화해봐! 💬';
+  }
 }
-
 function startSR(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR)return;
-  S.recognition=new SR();S.recognition.lang='en-US';S.recognition.continuous=true;S.recognition.interimResults=true;S.transcript='';
+  if(!SR){toast('Chrome 또는 Edge 브라우저를 사용해주세요.');return;}
+  S.recognition=new SR();
+  S.recognition.lang='en-US';
+  S.recognition.continuous=true;
+  S.recognition.interimResults=true;
+  S.transcript='';
+  S._srInterim='';
   S.recognition.onresult=e=>{
     let final='',interim='';
-    for(let i=0;i<e.results.length;i++){if(e.results[i].isFinal)final+=e.results[i][0].transcript+' ';else interim+=e.results[i][0].transcript;}
-    S.transcript=final.trim();
-    document.getElementById('transcriptArea').innerHTML=(final?`<span>${final}</span>`:'')+( interim?`<span style="color:#A0AEC0">${interim}</span>`:'');
+    for(let i=0;i<e.results.length;i++){
+      if(e.results[i].isFinal) final+=e.results[i][0].transcript+' ';
+      else interim+=e.results[i][0].transcript;
+    }
+    if(final.trim()) S.transcript=final.trim();
+    S._srInterim=interim;
+    document.getElementById('transcriptArea').innerHTML=
+      (S.transcript?'<span>'+S.transcript+'</span>':'')+
+      (interim?'<span style="color:#A0AEC0">'+interim+'</span>':'');
   };
-  S.recognition.onerror=()=>{};S.recognition.start();
+  S.recognition.onerror=e=>{
+    if(e.error==='not-allowed') toast('마이크 권한을 허용해야 녹음할 수 있어요.');
+  };
+  S.recognition.start();
 }
-
 function retryRec(){
   S.audioBlob=null;S.transcript='';clearInterval(S.timerInterval);S.timerSec=0;S.isRecording=false;
   document.getElementById('recTimer').textContent='00:00';
@@ -664,17 +645,203 @@ function retryRec(){
   document.getElementById('transcriptArea').innerHTML='<span class="tp">여기에 네가 말한 내용이 나타날 거야 ✨</span>';
   document.getElementById('audioSection').classList.remove('show');
   document.getElementById('convSection').style.display='none';
-  S.convTranscript='';S.aiQuestion='';S.aiQuestionKo='';
+  convHistory=[];convTurn=0;convTranscript='';convInterim='';aiQuestion='';aiQuestionKo='';
 }
-
 function updateDots(){for(let i=1;i<=3;i++)document.getElementById('d'+i).classList.toggle('done',i<=S.attemptCount);}
 
+// 자기평가
 function setScore(id,val){
   S.scores[id]=val;
   for(let v=1;v<=5;v++)document.getElementById('star-'+id+'-'+v)?.classList.toggle('on',v<=val);
   document.getElementById('slabel-'+id).textContent=SL[val];
 }
 
+// ── 대화형 말하기 ──
+function speakQuestion(){
+  if(!aiQuestion)return;
+  if('speechSynthesis' in window){
+    window.speechSynthesis.cancel();
+    const utter=new SpeechSynthesisUtterance(aiQuestion);
+    utter.lang='en-US';utter.rate=0.85;utter.pitch=1;
+    const voices=window.speechSynthesis.getVoices();
+    const enVoice=voices.find(v=>v.lang.startsWith('en-'));
+    if(enVoice)utter.voice=enVoice;
+    window.speechSynthesis.speak(utter);
+  }else{toast('이 브라우저는 음성 지원이 안 돼요 😢');}
+}
+
+function addConvBubble(role,text,ko){
+  const history=document.getElementById('convHistory');
+  const isAI=role==='ai';
+  const wrap=document.createElement('div');
+  wrap.className='conv-bubble-wrap'+(isAI?'':' student');
+  wrap.innerHTML='<div style="font-size:18px;flex-shrink:0">'+(isAI?'🤖':'👤')+'</div>'
+    +'<div><div class="conv-bubble '+(isAI?'ai':'student')+'">'+text+'</div>'
+    +(ko?'<div class="conv-ko">'+ko+'</div>':'')+'</div>';
+  history.appendChild(wrap);
+  history.scrollTop=history.scrollHeight;
+}
+
+async function startConversation(){
+  if(!S.audioBlob){toast('먼저 말하기를 해봐! 🎤');return;}
+  convHistory=[];convTurn=0;convTranscript='';
+  document.getElementById('convHistory').innerHTML='';
+  document.getElementById('convSection').style.display='block';
+  document.getElementById('convBtnRow').style.display='none';
+  document.getElementById('convTranscriptArea').innerHTML='<span class="tp">여기에 네 답변이 나타날 거야 ✨</span>';
+  if(S.transcript)addConvBubble('student',S.transcript);
+  await askAI();
+}
+
+async function askAI(){
+  const topic=curList()[S.topicIdx];
+  document.getElementById('questionLoading').style.display='flex';
+  document.getElementById('currentQBox').style.display='none';
+  document.getElementById('convRecArea').style.display='none';
+  document.getElementById('convBtnRow').style.display='none';
+  document.getElementById('convTurnBadge').textContent=(convTurn+1)+'/'+MAX_TURNS;
+
+  const key=document.getElementById('apiKey').value.trim()||localStorage.getItem('talktalk_apikey')||'';
+  const historyText=convHistory.map(h=>(h.role==='ai'?'AI: ':'Student: ')+h.text).join('\n');
+
+  const prompt='You are an English teacher having a conversation with a Korean 5th grader.\n'
+    +'Topic: '+topic.label.replace('\n',' - ')+'\n'
+    +'Key expressions to practice: '+topic.keywords.join(', ')+'\n'
+    +'Textbook sentences: '+topic.sentences.join(' / ')+'\n'
+    +'Conversation so far:\n'+(historyText||'(just started, student free speech: "'+(S.transcript||'none')+'")')+'\n'
+    +'Turn '+(convTurn+1)+' of '+MAX_TURNS+'.\n'
+    +'RULE: Ask a question DIRECTLY related to the topic keywords and sentences above.\n'
+    +'Turn 1: Use the first key expression as your question (e.g. "Where are you from?" for L1).\n'
+    +'Turn 2: Use second key expression or build on student answer naturally.\n'
+    +'Turn 3: Use another key expression or ask for more detail about their answer.\n'
+    +'NEVER ask generic questions like "Can you say more" or "What do you like about it".\n'
+    +'Keep it short, simple, and encouraging for a 5th grader.\n'
+    +'Respond ONLY:\nQ: [question]\nKO: [Korean translation]';
+
+  try{
+    if(key){
+      const res=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+        body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:150,messages:[{role:'user',content:prompt}]})
+      });
+      const data=await res.json();
+      const txt=data.content?.[0]?.text||'';
+      const qm=txt.match(/Q:\s*(.+)/);const km=txt.match(/KO:\s*(.+)/);
+      aiQuestion=qm?qm[1].trim():topic.keywords[convTurn]||topic.sentences[convTurn]||'Tell me more!';
+      aiQuestionKo=km?km[1].trim():'더 말해봐요!';
+    }else{
+      await new Promise(r=>setTimeout(r,500));
+      aiQuestion=topic.sentences[convTurn]||topic.keywords[convTurn]||'Tell me more!';
+      aiQuestionKo='더 말해봐요!';
+    }
+    addConvBubble('ai',aiQuestion,aiQuestionKo);
+    convHistory.push({role:'ai',text:aiQuestion});
+    document.getElementById('aiQuestion').textContent=aiQuestion;
+    document.getElementById('aiQuestionKo').textContent=aiQuestionKo;
+    document.getElementById('questionLoading').style.display='none';
+    document.getElementById('currentQBox').style.display='block';
+    document.getElementById('convRecArea').style.display='block';
+    setTimeout(()=>speakQuestion(),500);
+    toast('🔊 AI가 질문했어요! 잘 듣고 답해봐!');
+  }catch(e){
+    aiQuestion=topic.sentences[convTurn]||topic.keywords[convTurn]||'Tell me!';
+    aiQuestionKo='더 말해봐요!';
+    addConvBubble('ai',aiQuestion,aiQuestionKo);
+    convHistory.push({role:'ai',text:aiQuestion});
+    document.getElementById('aiQuestion').textContent=aiQuestion;
+    document.getElementById('aiQuestionKo').textContent=aiQuestionKo;
+    document.getElementById('questionLoading').style.display='none';
+    document.getElementById('currentQBox').style.display='block';
+    document.getElementById('convRecArea').style.display='block';
+    setTimeout(()=>speakQuestion(),500);
+  }
+}
+
+function toggleConvRec(){if(convRecording)stopConvRec();else startConvRec();}
+async function startConvRec(){
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    convRecording=true;
+    convTranscript='';
+    convInterim='';
+    const chunks=[];
+    convMediaRecorder=new MediaRecorder(stream);
+    convMediaRecorder.ondataavailable=e=>chunks.push(e.data);
+    convMediaRecorder.onstop=()=>{};
+    convMediaRecorder.start();
+    const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+    if(!SR){toast('Chrome 또는 Edge 브라우저를 사용해주세요.');return;}
+    convRecognition=new SR();
+    convRecognition.lang='en-US';
+    convRecognition.continuous=true;
+    convRecognition.interimResults=true;
+    convRecognition.onresult=e=>{
+      let final='',interim='';
+      for(let i=0;i<e.results.length;i++){
+        if(e.results[i].isFinal) final+=e.results[i][0].transcript+' ';
+        else interim+=e.results[i][0].transcript;
+      }
+      if(final.trim()) convTranscript=final.trim();
+      convInterim=interim;
+      document.getElementById('convTranscriptArea').innerHTML=
+        (convTranscript?'<span>'+convTranscript+'</span>':'')+
+        (interim?'<span style="color:#A0AEC0">'+interim+'</span>':'');
+    };
+    convRecognition.onerror=e=>{
+      if(e.error==='not-allowed') toast('마이크 권한을 허용해야 녹음할 수 있어요.');
+    };
+    convRecognition.start();
+    document.getElementById('convRecBtn').textContent='⏹';
+    document.getElementById('convRecBtn').classList.add('on');
+    document.getElementById('convRecHint').textContent='말하는 중... 끝나면 다시 눌러봐! ⏹';
+    document.getElementById('convBtnRow').style.display='none';
+  }catch(e){toast('마이크 권한을 허용해야 녹음할 수 있어요.');}
+}
+function stopConvRec(){
+  // interim이 있으면 convTranscript에 확정 저장
+  if(!convTranscript && convInterim) convTranscript=convInterim.trim();
+  convRecording=false;
+  if(convRecognition){try{convRecognition.stop();}catch(e){}}
+  if(convMediaRecorder?.state!=='inactive'){convMediaRecorder.stop();convMediaRecorder.stream.getTracks().forEach(t=>t.stop());}
+  document.getElementById('convRecBtn').textContent='🎤';
+  document.getElementById('convRecBtn').classList.remove('on');
+  if(!convTranscript){
+    document.getElementById('convTranscriptArea').innerHTML='<span style="color:#FC8181">음성이 인식되지 않았어요. 조금 더 크게 다시 말해볼까요? 🎤</span>';
+    document.getElementById('convRecHint').textContent='다시 눌러서 답해봐! 🎤';
+    toast('음성이 인식되지 않았어요. 다시 말해봐! 🎤');
+    return;
+  }
+  document.getElementById('convTranscriptArea').innerHTML='<span>'+convTranscript+'</span>';
+  const remaining=MAX_TURNS-convTurn-1;
+  document.getElementById('btnNextTurn').textContent=remaining>0?'💬 계속 대화 ('+remaining+'번 남음)':'💬 마지막 대화';
+  document.getElementById('convRecHint').textContent='잘했어! 계속 대화하거나 자기평가로 가봐! ✅';
+  document.getElementById('convBtnRow').style.display='block';
+  toast('답변 완료! 계속 대화하거나 자기평가로 가봐!');
+}
+async function nextConvTurn(){
+  if(!convTranscript){
+    toast('답변을 먼저 말해봐! 🎤 마이크 버튼을 눌러줘!');
+    return;
+  }
+  addConvBubble('student',convTranscript);
+  convHistory.push({role:'student',text:convTranscript});
+  convTurn++;convTranscript='';convInterim='';
+  document.getElementById('convTranscriptArea').innerHTML='<span class="tp">여기에 네 답변이 나타날 거야 ✨</span>';
+  document.getElementById('convBtnRow').style.display='none';
+  if(convTurn>=MAX_TURNS){
+    toast('🎉 대화 완료! 자기평가하러 가봐!');
+    document.getElementById('convRecArea').style.display='none';
+    document.getElementById('currentQBox').style.display='none';
+    const endDiv=document.createElement('div');endDiv.style.marginTop='10px';
+    endDiv.innerHTML='<button class="btn btn-green btn-full" onclick="goStep3()">✅ 대화 완료! 자기평가하기 →</button>';
+    document.getElementById('convSection').appendChild(endDiv);
+    return;
+  }
+  await askAI();
+}
+
+// AI 피드백
 async function getFeedback(){
   const allDone=EVAL_ITEMS.every(item=>S.scores[item.id]>0);
   if(!allDone){toast('모든 항목을 별로 평가해봐! ⭐');return;}
@@ -687,12 +854,18 @@ async function getFeedback(){
   const comment=document.getElementById('evalComment').value.trim();
   const avg=(Object.values(S.scores).reduce((a,b)=>a+b,0)/EVAL_ITEMS.length).toFixed(1);
   const detail=EVAL_ITEMS.map(item=>item.label+': '+S.scores[item.id]+'/5').join(', ');
+  const convSummary=convHistory.length?'\n[CONVERSATION]\n'+convHistory.map(h=>(h.role==='ai'?'AI: ':'Student: ')+h.text).join('\n'):'';
 
-  const sys='You are an expert English speech coach for Korean 5th graders (age 11).\nCRITICAL SCORING RULE: Score ONLY based on what the student actually said. NEVER let self-evaluation affect the SCORE.\nSCORING: 90-100=3+expressions+full sentences, 75-89=2expressions, 60-74=1expression short, 40-59=very short/errors, 20-39=single words, 0-19=silent. Under 3 words=below 30 no exceptions.\nUSE self-eval ONLY for tone: low confidence->warm cheer, low fluency->flow tips, low accuracy->grammar fix, low content->suggest more, high scores->praise that skill.\nConsider both free speech AND conversation.\nRespond ONLY:\nSCORE: [integer 0-100 based ONLY on speech]\nGOOD: [quote actual words, 2-3 praises]\nIMPROVE: [1-2 gentle fixes with exact correction]\nEXAMPLE: [model sentence + Korean translation]\nNEXT: [specific challenge for weakest area]\nCHEER: [warm Korean encouragement]';
+  const sys='You are an expert English speech coach for Korean 5th graders (age 11).\n'
+    +'CRITICAL: Score ONLY based on actual speech. NEVER let self-evaluation scores affect SCORE.\n'
+    +'SCORING: 90-100=3+expressions+full sentences, 75-89=2expressions, 60-74=1expression short, 40-59=very short/errors, 20-39=single words, 0-19=silent. Under 3 words=below 30.\n'
+    +'USE self-eval ONLY for tone: low confidence->warm cheer, low fluency->flow tips, low accuracy->grammar fix, low content->suggest more.\n'
+    +'Consider BOTH free speech and conversation when evaluating.\n'
+    +'Respond ONLY:\nSCORE: [0-100]\nGOOD: [quote actual words in quotes, 2-3 specific praises]\nIMPROVE: [1-2 gentle fixes with exact correction]\nEXAMPLE: [model sentence + Korean translation]\nNEXT: [specific challenge]\nCHEER: [warm Korean encouragement]';
 
-  const convSummary=convHistory.length?'\n[CONVERSATION]\n'+convHistory.map(h=>(h.role==='ai'?'AI: ':'Student: ')+h.text).join('\n'):'';const usr='Topic: '+topic.emoji+' '+topic.label.replace('\n',' — ')+'\nPrompt: '+topic.prompt+'\n[FREE SPEECH] "'+(S.transcript||'(no speech)')+'"'+convSummary+'\nAttempts: '+S.attemptCount+' Duration: '+S.timerSec+'s\nSelf-eval(reference only,NOT for scoring): '+detail+' avg:'+avg+'/5\nComment: "'+(comment||'none')+'"';
+  const usr='Topic: '+topic.emoji+' '+topic.label.replace('\n',' - ')+'\nPrompt: '+topic.prompt+'\n[FREE SPEECH] "'+(S.transcript||'(no speech)')+'"\n'+convSummary+'\nDuration: '+S.timerSec+'s | Attempts: '+S.attemptCount+'\nSelf-eval (reference only, NOT for scoring): '+detail+' avg:'+avg+'/5\nComment: "'+(comment||'none')+'"';
 
-  const key=document.getElementById('apiKey').value.trim()||EMBED_KEY;
+  const key=document.getElementById('apiKey').value.trim()||localStorage.getItem('talktalk_apikey')||'';
   try{
     let txt='';
     if(key){
@@ -702,11 +875,10 @@ async function getFeedback(){
         body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,system:sys,messages:[{role:'user',content:usr}]})
       });
       if(!res.ok){const err=await res.json().catch(()=>({}));throw new Error(err.error?.message||'API 오류 ('+res.status+')');}
-      const data=await res.json();
-      txt=data.content?.[0]?.text||'';
+      const data=await res.json();txt=data.content?.[0]?.text||'';
     }else{
       await new Promise(r=>setTimeout(r,1500));
-      txt='SCORE: 72\nGOOD: 영어로 용감하게 말하려고 노력한 점이 훌륭해요! "'+( topic.keywords?.[0]||'I')+'" 표현을 사용하려고 한 점도 좋아요.\nIMPROVE: 문장을 조금 더 길게 말해봐요. "because"를 붙여서 이유도 말해봐요!\nEXAMPLE: "I like pizza because it\'s very delicious." (피자가 맛있어서 좋아해요.)\nNEXT: 다음엔 "because"로 이유를 꼭 설명해봐요!\nCHEER: 오늘 정말 잘했어요! 영어로 말하는 게 어렵지만 포기하지 않는 네가 자랑스러워요! 💪🌟';
+      txt='SCORE: 72\nGOOD: 영어로 용감하게 말하려고 노력한 점이 훌륭해요! 핵심 표현을 사용하려고 한 점도 좋아요.\nIMPROVE: 문장을 조금 더 길게 말해봐요. "because"를 붙여서 이유도 말해봐요!\nEXAMPLE: "I like pizza because it is very delicious." (피자가 맛있어서 좋아해요.)\nNEXT: 다음엔 "because"로 이유를 꼭 설명해봐요!\nCHEER: 오늘 정말 잘했어요! 포기하지 않는 네가 자랑스러워요! 💪🌟';
     }
     renderFeedback(txt,avg,topic,comment);
   }catch(e){
@@ -721,22 +893,15 @@ function renderFeedback(text,avgScore,topic,comment){
   const sc=score>=80?'#276749':score>=60?'#2B6CB0':'#744210';
   S.lastFeedback={good,improve,example,next,cheer};S.lastScore=score;
 
-  document.getElementById('feedbackContent').innerHTML=`
-    <div class="ai-bubble">
-      <div class="ai-score-row">
-        <div class="ai-score-big" style="color:${sc}">${score}</div>
-        <div class="ai-score-info">
-          <div class="ai-score-lbl">오늘의 스피치 점수</div>
-          <div class="ai-bar-wrap"><div class="ai-bar" style="width:0%" id="scoreBar"></div></div>
-          <div style="font-size:10px;color:var(--text-soft);margin-top:3px">${score>=80?'🌟 훌륭해요!':score>=60?'👍 잘 하고 있어요!':'💪 조금 더 도전해봐!'}</div>
-        </div>
-      </div>
-      ${good?'<div class="ai-sec"><div class="ai-sec-title good">✅ 잘한 점</div><div class="ai-sec-body">'+good+'</div></div>':''}
-      ${improve?'<div class="ai-sec"><div class="ai-sec-title improve">💡 이렇게 하면 더 좋아요</div><div class="ai-sec-body">'+improve+'</div></div>':''}
-      ${example?'<div class="ai-sec"><div class="ai-sec-title example">✍️ 수정 예문</div><div class="ai-sec-body" style="background:#fff;border-radius:7px;padding:7px 10px;border-left:3px solid var(--purple)">'+example+'</div></div>':''}
-      ${next?'<div class="ai-sec"><div class="ai-sec-title next">🚀 다음 도전 과제</div><div class="ai-sec-body">'+next+'</div></div>':''}
-      ${cheer?'<div class="ai-cheer">🌟 '+cheer+'</div>':''}
-    </div>`;
+  document.getElementById('feedbackContent').innerHTML=
+    '<div class="ai-bubble">'
+    +'<div class="ai-score-row"><div class="ai-score-big" style="color:'+sc+'">'+score+'</div><div class="ai-score-info"><div class="ai-score-lbl">오늘의 스피치 점수</div><div class="ai-bar-wrap"><div class="ai-bar" style="width:0%" id="scoreBar"></div></div><div style="font-size:10px;color:var(--text-soft);margin-top:3px">'+(score>=80?'🌟 훌륭해요!':score>=60?'👍 잘 하고 있어요!':'💪 조금 더 도전해봐!')+'</div></div></div>'
+    +(good?'<div class="ai-sec"><div class="ai-sec-title good">✅ 잘한 점</div><div class="ai-sec-body">'+good+'</div></div>':'')
+    +(improve?'<div class="ai-sec"><div class="ai-sec-title improve">💡 이렇게 하면 더 좋아요</div><div class="ai-sec-body">'+improve+'</div></div>':'')
+    +(example?'<div class="ai-sec"><div class="ai-sec-title example">✍️ 수정 예문</div><div class="ai-sec-body" style="background:#fff;border-radius:7px;padding:7px 10px;border-left:3px solid var(--purple)">'+example+'</div></div>':'')
+    +(next?'<div class="ai-sec"><div class="ai-sec-title next">🚀 다음 도전 과제</div><div class="ai-sec-body">'+next+'</div></div>':'')
+    +(cheer?'<div class="ai-cheer">🌟 '+cheer+'</div>':'')
+    +'</div>';
   setTimeout(()=>{const b=document.getElementById('scoreBar');if(b)b.style.width=Math.min(score,100)+'%';},100);
   document.getElementById('afterFeedback').style.display='block';
 
@@ -750,24 +915,20 @@ function renderFeedback(text,avgScore,topic,comment){
   toast('🎉 피드백 완료! 성장 기록에 저장됐어!');
 }
 
+// 성장 기록
 function renderGrowth(){
   const name=document.getElementById('studentName').value.trim();
-  const all=loadRecs();
-  const recs=name?all.filter(r=>r.name===name):all;
-  const list=document.getElementById('recordList');
-  const cw=document.getElementById('chartWrap');
+  const all=loadRecs();const recs=name?all.filter(r=>r.name===name):all;
+  const list=document.getElementById('recordList');const cw=document.getElementById('chartWrap');
   if(!recs.length){list.innerHTML='<div class="empty-state"><div class="empty-icon">📈</div>아직 기록이 없어요!<br>말하기 연습을 완료하면 여기에 나타나요 🌱</div>';cw.style.display='none';return;}
   cw.style.display='block';
-  list.innerHTML='<div style="font-size:11px;color:var(--text-soft);margin-bottom:7px">'+(name?name+'의 기록 '+recs.length+'개':'전체 기록 '+recs.length+'개 — 이름 입력 시 개인 기록만 표시')+'</div>'+
-    [...recs].reverse().map(r=>'<div class="rec-item"><div class="rec-item-top"><div class="rec-item-name">👤 '+r.name+'</div><div class="rec-item-date">'+r.date+' '+(r.time||'')+'</div></div><div class="rec-item-topic">'+r.topic+'</div><div class="rc-chips"><span class="rc rc-s">🎯 '+r.score+'점</span><span class="rc rc-a">🔄 '+r.attempts+'회</span><span class="rc rc-e">⭐ '+r.evalAvg+'/5</span>'+(r.timerSec?'<span class="rc" style="background:#FEF3C7;color:#92400E">⏱️ '+r.timerSec+'초</span>':'')+'</div>'+(r.comment?'<div style="margin-top:5px;font-size:11px;color:var(--text-soft);font-style:italic">"'+r.comment+'"</div>':'')+'</div>').join('');
-
+  list.innerHTML='<div style="font-size:11px;color:var(--text-soft);margin-bottom:7px">'+(name?name+'의 기록 '+recs.length+'개':'전체 기록 '+recs.length+'개')+'</div>'+
+    [...recs].reverse().map(r=>'<div class="rec-item"><div class="rec-item-top"><div class="rec-item-name">👤 '+r.name+'</div><div class="rec-item-date">'+r.date+' '+(r.time||'')+'</div></div><div style="font-size:11px;color:var(--blue);font-weight:600;margin-bottom:4px">'+r.topic+'</div><div class="rc-chips"><span class="rc rc-s">🎯 '+r.score+'점</span><span class="rc rc-a">🔄 '+r.attempts+'회</span><span class="rc rc-e">⭐ '+r.evalAvg+'/5</span>'+(r.timerSec?'<span class="rc" style="background:#FEF3C7;color:#92400E">⏱️ '+r.timerSec+'초</span>':'')+'</div>'+(r.comment?'<div style="margin-top:5px;font-size:11px;color:var(--text-soft);font-style:italic">"'+r.comment+'"</div>':'')+'</div>').join('');
+  if(scChart)scChart.destroy();if(atChart)atChart.destroy();
   const labels=recs.map(r=>r.date.replace(/\d{4}\./,'').trim());
-  if(scChart)scChart.destroy();
-  if(atChart)atChart.destroy();
   scChart=new Chart(document.getElementById('scoreChart'),{type:'line',data:{labels,datasets:[{label:'점수',data:recs.map(r=>r.score),borderColor:'#4A90E2',backgroundColor:'rgba(74,144,226,0.1)',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#4A90E2',tension:0.35,fill:true}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{min:0,max:100,ticks:{stepSize:20}}}}});
   atChart=new Chart(document.getElementById('attemptChart'),{type:'bar',data:{labels,datasets:[{label:'도전',data:recs.map(r=>r.attempts),backgroundColor:'rgba(72,187,120,0.7)',borderColor:'#48BB78',borderWidth:2,borderRadius:6}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{min:0,max:3,ticks:{stepSize:1}}}}});
 }
-
 function clearMyRecords(){
   const name=document.getElementById('studentName').value.trim();
   if(!confirm(name?name+'의 기록을 삭제할까요?':'모든 기록을 삭제할까요?'))return;
@@ -776,26 +937,16 @@ function clearMyRecords(){
   renderGrowth();toast('기록을 초기화했어요.');
 }
 
+// 교사 대시보드
 async function renderDash(){
   const dash=document.getElementById('dashContent');
   dash.innerHTML='<div class="empty-state"><div class="spinner" style="margin:0 auto 10px"></div>학생 데이터 불러오는 중...</div>';
   try{
-    const res=await fetch(SCRIPT_URL);
-    const json=await res.json();
-    const all=json.data||[];
+    const res=await fetch(SCRIPT_URL);const json=await res.json();const all=json.data||[];
     if(!all.length){dash.innerHTML='<div class="empty-state"><div class="empty-icon">👩‍🏫</div>아직 학생 기록이 없어요!</div>';return;}
     const by={};
-    all.forEach(r=>{
-      const name=r['이름']||'이름없음';
-      if(!by[name])by[name]={name,scores:[],attempts:[],count:0};
-      by[name].scores.push(Number(r['점수'])||0);
-      by[name].attempts.push(Number(r['도전횟수'])||0);
-      by[name].count++;
-    });
-    const sts=Object.values(by).map(s=>({...s,
-      avgScore:(s.scores.reduce((a,b)=>a+b,0)/s.scores.length).toFixed(1),
-      totalAtt:s.attempts.reduce((a,b)=>a+b,0)
-    }));
+    all.forEach(r=>{const name=r['이름']||'이름없음';if(!by[name])by[name]={name,scores:[],attempts:[],count:0};by[name].scores.push(Number(r['점수'])||0);by[name].attempts.push(Number(r['도전횟수'])||0);by[name].count++;});
+    const sts=Object.values(by).map(s=>({...s,avgScore:(s.scores.reduce((a,b)=>a+b,0)/s.scores.length).toFixed(1),totalAtt:s.attempts.reduce((a,b)=>a+b,0)}));
     const oa=(all.reduce((a,r)=>a+(Number(r['점수'])||0),0)/all.length).toFixed(1);
     const ts=[...sts].sort((a,b)=>b.avgScore-a.avgScore)[0];
     const ta=[...sts].sort((a,b)=>b.totalAtt-a.totalAtt)[0];
@@ -814,45 +965,16 @@ async function renderDash(){
     dash.innerHTML='<div class="empty-state"><div class="empty-icon">😢</div>데이터 로드 실패<br><small>'+e.message+'</small><br><button class="btn btn-blue" style="margin-top:10px;width:auto;padding:8px 16px" onclick="renderDash()">다시 시도</button></div>';
   }
 }
-function _dummy_renderDash(){
-  const all=loadRecs();
-  const dash=document.getElementById('dashContent');
-  if(!all.length){dash.innerHTML='<div class="empty-state"><div class="empty-icon">👩‍🏫</div>아직 학생 기록이 없어요!</div>';return;}
-  const by={};
-  all.forEach(r=>{if(!by[r.name])by[r.name]={name:r.name,scores:[],attempts:[],count:0};by[r.name].scores.push(r.score);by[r.name].attempts.push(r.attempts);by[r.name].count++;});
-  const sts=Object.values(by).map(s=>({...s,avgScore:(s.scores.reduce((a,b)=>a+b,0)/s.scores.length).toFixed(1),totalAtt:s.attempts.reduce((a,b)=>a+b,0)}));
-  const oa=(all.reduce((a,r)=>a+r.score,0)/all.length).toFixed(1);
-  const ts=[...sts].sort((a,b)=>b.avgScore-a.avgScore)[0];
-  const ta=[...sts].sort((a,b)=>b.totalAtt-a.totalAtt)[0];
-  dash.innerHTML='<div class="stat-grid">'
-    +'<div class="stat-box"><div class="stat-val" style="color:var(--blue)">'+all.length+'</div><div class="stat-lbl">총 연습 횟수</div></div>'
-    +'<div class="stat-box"><div class="stat-val" style="color:var(--green)">'+sts.length+'</div><div class="stat-lbl">참여 학생 수</div></div>'
-    +'<div class="stat-box"><div class="stat-val" style="color:var(--purple)">'+oa+'</div><div class="stat-lbl">전체 평균 점수</div></div>'
-    +'<div class="stat-box"><div class="stat-val" style="color:var(--orange)">'+all.reduce((a,r)=>a+r.attempts,0)+'</div><div class="stat-lbl">총 도전 횟수</div></div></div>'
-    +'<div class="top-box" style="background:linear-gradient(135deg,#FFFDE7,#FEF3C7);border-color:#F6E05E"><div class="top-box-title" style="color:#744210">🌟 최고 성장 학생 (평균 점수)</div><div class="top-box-name">'+ts.name+' — '+ts.avgScore+'점 평균</div></div>'
-    +'<div class="top-box" style="background:linear-gradient(135deg,#E6FFFA,#C6F6D5);border-color:#48BB78"><div class="top-box-title" style="color:#276749">💪 가장 많이 도전한 학생</div><div class="top-box-name">'+ta.name+' — 총 '+ta.totalAtt+'회 도전</div></div>'
-    +'<table class="dash-table"><thead><tr><th>이름</th><th>기록 수</th><th>평균점수</th><th>총도전</th></tr></thead><tbody>'
-    +sts.sort((a,b)=>b.avgScore-a.avgScore).map(s=>'<tr><td><strong>'+s.name+'</strong></td><td>'+s.count+'회</td><td><strong style="color:var(--blue)">'+s.avgScore+'점</strong></td><td>'+s.totalAtt+'회</td></tr>').join('')
-    +'</tbody></table>';
-}
-
 function downloadCSV(){
-  const all=loadRecs();
-  if(!all.length){toast('저장된 기록이 없어요!');return;}
+  const all=loadRecs();if(!all.length){toast('저장된 기록이 없어요!');return;}
   const h=['이름','날짜','시간','주제','점수','자기평가평균','도전횟수','말하기시간(초)','소감','잘한점','개선점','수정예문','다음도전'];
   const rows=all.map(r=>[r.name,r.date,r.time||'',r.topic,r.score,r.evalAvg,r.attempts,r.timerSec||0,(r.comment||'').replace(/,/g,' '),(r.feedback?.good||'').replace(/,/g,' ').slice(0,50),(r.feedback?.improve||'').replace(/,/g,' ').slice(0,50),(r.feedback?.example||'').replace(/,/g,' ').slice(0,50),(r.feedback?.next||'').replace(/,/g,' ').slice(0,50)]);
   const csv='\uFEFF'+[h,...rows].map(r=>r.join(',')).join('\n');
-  const a=document.createElement('a');
-  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
-  a.download='TALKTALK_'+new Date().toLocaleDateString('ko-KR').replace(/\./g,'').replace(/ /g,'')+'.csv';
-  a.click();toast('📥 CSV 다운로드 완료!');
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='TALKTALK_'+new Date().toLocaleDateString('ko-KR').replace(/\./g,'').replace(/ /g,'')+'.csv';a.click();toast('📥 CSV 다운로드 완료!');
 }
+function clearAllRecords(){if(!confirm('모든 학생 기록을 삭제할까요?'))return;localStorage.removeItem(LS_KEY);renderDash();toast('전체 기록 초기화 완료.');}
 
-function clearAllRecords(){
-  if(!confirm('모든 학생 기록을 삭제할까요?'))return;
-  localStorage.removeItem(LS_KEY);renderDash();toast('전체 기록 초기화 완료.');
-}
-
+// 학습 리포트
 function openReport(){
   const name=document.getElementById('studentName').value.trim()||'이름 없음';
   const topic=curList()[S.topicIdx];
@@ -860,10 +982,7 @@ function openReport(){
   const ea=(Object.values(S.scores).reduce((a,b)=>a+b,0)/EVAL_ITEMS.length).toFixed(1);
   const fb=S.lastFeedback||{};
   document.getElementById('reportBody').innerHTML=
-    '<div style="text-align:center;padding:8px 0 12px">'
-    +'<div class="rpt-score">'+S.lastScore+'</div>'
-    +'<div style="font-size:11px;color:var(--text-soft);margin-top:1px">스피치 점수 / 100</div>'
-    +'<div style="background:var(--border);border-radius:20px;height:7px;overflow:hidden;max-width:180px;margin:7px auto 0"><div style="height:100%;border-radius:20px;background:linear-gradient(to right,var(--blue),var(--green));width:'+S.lastScore+'%"></div></div></div>'
+    '<div style="text-align:center;padding:8px 0 12px"><div class="rpt-score">'+S.lastScore+'</div><div style="font-size:11px;color:var(--text-soft);margin-top:1px">스피치 점수 / 100</div><div style="background:var(--border);border-radius:20px;height:7px;overflow:hidden;max-width:180px;margin:7px auto 0"><div style="height:100%;border-radius:20px;background:linear-gradient(to right,var(--blue),var(--green));width:'+S.lastScore+'%"></div></div></div>'
     +'<div class="rpt-div"></div>'
     +'<div class="rpt-sec"><div class="rpt-lbl">👤 학생</div><div class="rpt-val"><strong>'+name+'</strong> · '+new Date().toLocaleDateString('ko-KR')+'</div></div>'
     +'<div class="rpt-sec"><div class="rpt-lbl">📚 주제</div><div class="rpt-val">'+(topic?topic.emoji+' '+(topic.label.split('\n')[1]||topic.label):'—')+'</div></div>'
@@ -881,9 +1000,11 @@ function openReport(){
 function closeReport(){document.getElementById('reportModal').classList.remove('open');}
 function closeReportBg(e){if(e.target===document.getElementById('reportModal'))closeReport();}
 
+// 초기화
 function resetAll(){
   S.topicIdx=-1;S.audioBlob=null;S.transcript='';S.attemptCount=0;S.timerSec=0;
   clearInterval(S.timerInterval);S.isRecording=false;S.lastFeedback=null;S.lastScore=0;
+  convHistory=[];convTurn=0;convTranscript='';convInterim='';aiQuestion='';aiQuestionKo='';
   renderTopics();renderUnits();renderEvalItems();
   document.getElementById('evalComment').value='';
   document.getElementById('recTimer').textContent='00:00';
@@ -893,276 +1014,14 @@ function resetAll(){
   document.getElementById('audioSection').classList.remove('show');
   document.getElementById('exampleBox').classList.remove('show');
   document.getElementById('btn1').disabled=true;
+  document.getElementById('convSection').style.display='none';
   updateDots();
   document.getElementById('feedbackContent').innerHTML='<div style="text-align:center;padding:26px;color:var(--text-soft);font-size:13px">STEP 3에서 자기평가 후 AI 피드백을 받아봐! 🌟</div>';
   document.getElementById('afterFeedback').style.display='none';
-  document.getElementById('convSection').style.display='none';
-  document.getElementById('convAudioWrap').style.display='none';
-  S.convTranscript='';S.aiQuestion='';S.aiQuestionKo='';
   openStep(1);document.getElementById('body1').classList.remove('hidden');
 }
 
-function saveApiKey(){
-  const key = document.getElementById('apiKeyInput').value.trim();
-  if(!key || !key.startsWith('sk-')){
-    document.getElementById('apiStatus').innerHTML='<span style="color:#E53E3E">⚠️ 올바른 API 키를 입력해주세요</span>';
-    return;
-  }
-  localStorage.setItem('talktalk_apikey', key);
-  document.getElementById('apiKey').value = key;
-  document.getElementById('apiStatus').innerHTML='<span style="color:var(--green)">✅ 저장 완료!</span>';
-  setTimeout(()=>{ document.getElementById('apiModal').classList.remove('open'); toast('🔑 API 키가 저장됐어요! 학생들이 바로 사용할 수 있어요.'); }, 700);
-}
-
-function closeApiModal(){
-  document.getElementById('apiModal').classList.remove('open');
-  if(!localStorage.getItem('talktalk_apikey')) toast('⚠️ API 키 미설정 — AI 피드백은 예시 모드로 작동해요.');
-}
-
-function openApiSetting(){
-  const saved = localStorage.getItem('talktalk_apikey');
-  if(saved) document.getElementById('apiKeyInput').value = saved;
-  document.getElementById('apiStatus').innerHTML='';
-  document.getElementById('apiModal').classList.add('open');
-}
-
-
-// ── 대화형 말하기 ──
-let convHistory = []; // {role:'ai'|'student', text:string}
-let convTurn = 0;
-const MAX_TURNS = 3;
-
-function speakQuestion(){
-  const q = S.aiQuestion;
-  if(!q) return;
-  if('speechSynthesis' in window){
-    window.speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(q);
-    utter.lang = 'en-US';
-    utter.rate = 0.85;
-    utter.pitch = 1;
-    // 영어 목소리 우선 선택
-    const voices = window.speechSynthesis.getVoices();
-    const enVoice = voices.find(v=>v.lang.startsWith('en'));
-    if(enVoice) utter.voice = enVoice;
-    window.speechSynthesis.speak(utter);
-  } else {
-    toast('이 브라우저는 음성 지원이 안 돼요 😢');
-  }
-}
-
-function addConvBubble(role, text, koText=''){
-  const history = document.getElementById('convHistory');
-  const isAI = role === 'ai';
-  const div = document.createElement('div');
-  div.style.cssText = 'display:flex;gap:8px;align-items:flex-start;'+(isAI?'':'flex-direction:row-reverse');
-  div.innerHTML = '<div style="font-size:20px;flex-shrink:0">'+(isAI?'🤖':'👤')+'</div>'
-    +'<div style="max-width:85%">'
-    +'<div style="background:'+(isAI?'linear-gradient(135deg,#EBF8FF,#E6FFFA)':'linear-gradient(135deg,#E6FFFA,#F0FFF4)')+';border-radius:'+(isAI?'4px 12px 12px 12px':'12px 4px 12px 12px')+';padding:9px 12px;font-size:13px;font-weight:600;color:var(--text);line-height:1.5">'+text+'</div>'
-    +(koText?'<div style="font-size:11px;color:var(--text-soft);margin-top:3px;padding:0 4px">'+koText+'</div>':'')
-    +'</div>';
-  history.appendChild(div);
-  history.scrollTop = history.scrollHeight;
-}
-
-async function startConversation(){
-  if(!S.audioBlob){toast('먼저 말하기를 해봐! 🎤');return;}
-  convHistory=[];convTurn=0;
-  S.convTranscript='';
-  document.getElementById('convHistory').innerHTML='';
-  document.getElementById('convSection').style.display='block';
-  document.getElementById('convBtnRow').style.display='none';
-  document.getElementById('convTranscript').innerHTML='<span class="tp">여기에 네 답변이 나타날 거야 ✨</span>';
-
-  // 학생 자유발언을 첫 버블로 추가
-  if(S.transcript) addConvBubble('student', S.transcript);
-
-  await askAIQuestion();
-}
-
-async function askAIQuestion(){
-  const topic=curList()[S.topicIdx];
-  document.getElementById('questionLoading').style.display='flex';
-  document.getElementById('currentQBox').style.display='none';
-  document.getElementById('convRecArea').style.display='none';
-
-  const key=document.getElementById('apiKey').value.trim()||EMBED_KEY;
-
-  // 대화 히스토리로 컨텍스트 구성
-  const historyText = convHistory.map(h=>(h.role==='ai'?'AI: ':'Student: ')+h.text).join('\n');
-
-  const sentences = topic.sentences ? topic.sentences.join(' / ') : '';
-  const prompt = 'You are an English teacher having a conversation with a Korean 5th grader.'+
-    '\nLesson topic: '+topic.label.replace('\n',' - ')+
-    '\nKey expressions to practice: '+(topic.keywords?.join(', ')||'')+
-    '\nExample sentences from textbook: '+sentences+
-    '\nConversation so far:\n'+(historyText||'(just started)')+
-    '\nTurn '+(convTurn+1)+' of '+MAX_TURNS+'.'+
-    '\nCRITICAL: Your question MUST be directly about this lesson topic only. Use or lead to the exact key expressions. NEVER ask generic questions like Can you say more or What do you like. Always ask something specific to the topic keywords and sentences above. For free topics, ask naturally about the specific subject.'+
-    '\nTurn 1: Ask the main topic question (e.g. if topic is Where Are You From, ask exactly that).'+
-    '\nTurn 2: Ask a follow-up using another key expression from the list.'+
-    '\nTurn 3: Ask something that helps student use the example sentences.'+
-    '\nKeep it simple, encouraging, and stay strictly on this lesson topic.'+
-    '\nFormat (ONLY this, nothing else):\nQ: [question in English]\nKO: [Korean translation]';
-
-  try{
-    if(key){
-      const res=await fetch('https://api.anthropic.com/v1/messages',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-        body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:150,messages:[{role:'user',content:prompt}]})
-      });
-      const data=await res.json();
-      const txt=data.content?.[0]?.text||'';
-      const qm=txt.match(/Q:\s*(.+)/);
-      const km=txt.match(/KO:\s*(.+)/);
-      S.aiQuestion=qm?qm[1].trim():(topic.sentences?.[convTurn]||'Tell me more!');
-      S.aiQuestionKo=km?km[1].trim():'더 말해줘요!';
-    }else{
-      await new Promise(r=>setTimeout(r,600));
-      // 단원/주제별 핵심 표현 기반 기본 질문
-      const kw = topic.keywords || [];
-      const sent = topic.sentences || [];
-      const defaultSets = [
-        // 턴 0: 핵심 첫 질문
-        { q: sent[0] ? sent[0].replace(/___\./g,'blah blah?').replace(/___/g,'blah blah') : (kw[0]||'Tell me about yourself') + '?',
-          ko: '첫 번째 질문이에요!' },
-        // 턴 1: 두 번째 핵심 표현 변형
-        { q: sent[1] ? sent[1].replace(/___\./g,'blah blah?').replace(/___/g,'blah blah') : 'Can you use "' + (kw[1]||kw[0]||'more') + '" in a sentence?',
-          ko: '이번엔 다른 표현으로 말해봐요!' },
-        // 턴 2: 세 번째 핵심 표현 또는 이어지는 질문
-        { q: sent[2] ? sent[2].replace(/___\./g,'blah blah?').replace(/___/g,'blah blah') : 'Can you tell me more using "' + (kw[2]||kw[0]||'because') + '"?',
-          ko: '조금 더 자세히 말해봐요!' }
-      ];
-      const dq = defaultSets[convTurn] || defaultSets[0];
-      S.aiQuestion = dq.q;
-      S.aiQuestionKo = dq.ko;
-    }
-
-    // 버블 추가
-    addConvBubble('ai', S.aiQuestion, S.aiQuestionKo);
-    convHistory.push({role:'ai',text:S.aiQuestion});
-
-    // 질문 표시 + TTS 자동 재생
-    document.getElementById('aiQuestion').textContent=S.aiQuestion;
-    document.getElementById('aiQuestionKo').textContent=S.aiQuestionKo;
-    document.getElementById('questionLoading').style.display='none';
-    document.getElementById('currentQBox').style.display='block';
-    document.getElementById('convRecArea').style.display='block';
-    document.getElementById('convBtnRow').style.display='none';
-    document.getElementById('convTranscript').innerHTML='<span class="tp">여기에 네 답변이 나타날 거야 ✨</span>';
-
-    // 자동 TTS
-    setTimeout(()=>speakQuestion(), 400);
-    toast('🔊 AI가 질문했어요! 잘 듣고 답해봐!');
-  }catch(e){
-    // catch: 단원 핵심 표현 기반 기본 질문
-    const kw2 = topic.keywords || [];
-    const sent2 = topic.sentences || [];
-    const catchSets = [
-      { q: sent2[0] ? sent2[0].replace(/___\./g,'blah blah?').replace(/___/g,'blah blah') : (kw2[0]||'Tell me')+' ?', ko: '첫 번째 질문이에요!' },
-      { q: sent2[1] ? sent2[1].replace(/___\./g,'blah blah?').replace(/___/g,'blah blah') : 'Can you use "' + (kw2[1]||kw2[0]||'more') + '"?', ko: '다른 표현으로 말해봐요!' },
-      { q: sent2[2] ? sent2[2].replace(/___\./g,'blah blah?').replace(/___/g,'blah blah') : 'Tell me more about "' + (kw2[2]||kw2[0]||'this topic') + '"!', ko: '더 자세히 말해봐요!' }
-    ];
-    const cq = catchSets[convTurn] || catchSets[0];
-    S.aiQuestion = cq.q;
-    S.aiQuestionKo = cq.ko;
-    addConvBubble('ai',S.aiQuestion,S.aiQuestionKo);
-    convHistory.push({role:'ai',text:S.aiQuestion});
-    document.getElementById('aiQuestion').textContent=S.aiQuestion;
-    document.getElementById('aiQuestionKo').textContent=S.aiQuestionKo;
-    document.getElementById('questionLoading').style.display='none';
-    document.getElementById('currentQBox').style.display='block';
-    document.getElementById('convRecArea').style.display='block';
-    setTimeout(()=>speakQuestion(),400);
-  }
-}
-
-async function nextConvTurn(){
-  // 현재 답변 저장
-  const ans = S.convTranscript||'(답변 없음)';
-  addConvBubble('student', ans);
-  convHistory.push({role:'student',text:ans});
-  S.convTranscript += ' '+ans;
-  convTurn++;
-
-  if(convTurn>=MAX_TURNS){
-    toast('🎉 대화 완료! 자기평가하러 가봐!');
-    document.getElementById('convRecArea').style.display='none';
-    document.getElementById('currentQBox').style.display='none';
-    document.getElementById('convBtnRow').style.display='none';
-    // 자기평가 버튼만 보여주기
-    const endDiv=document.createElement('div');
-    endDiv.style.marginTop='10px';
-    endDiv.innerHTML='<button class="btn btn-green btn-full" onclick="goStep3()">✅ 대화 완료! 자기평가하기 →</button>';
-    document.getElementById('convSection').appendChild(endDiv);
-    return;
-  }
-  // 다음 질문
-  S.convTranscript='';
-  document.getElementById('convBtnRow').style.display='none';
-  document.getElementById('convTranscript').innerHTML='<span class="tp">여기에 네 답변이 나타날 거야 ✨</span>';
-  await askAIQuestion();
-}
-
-function toggleConvRec(){
-  if(S.convRecording)stopConvRec();else startConvRec();
-}
-
-async function startConvRec(){
-  try{
-    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
-    S.convRecording=true;
-    const chunks=[];
-    S.convMediaRecorder=new MediaRecorder(stream);
-    S.convMediaRecorder.ondataavailable=e=>chunks.push(e.data);
-    S.convMediaRecorder.onstop=()=>{
-      const blob=new Blob(chunks,{type:'audio/webm'});
-      document.getElementById('convAudioPlayer').src=URL.createObjectURL(blob);
-      document.getElementById('convAudioWrap').style.display='block';
-    };
-    S.convMediaRecorder.start();
-    // SR
-    const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-    if(SR){
-      S.convRecognition=new SR();S.convRecognition.lang='en-US';S.convRecognition.continuous=true;S.convRecognition.interimResults=true;
-      S.convTranscript='';
-      S.convRecognition.onresult=e=>{
-        let final='',interim='';
-        for(let i=0;i<e.results.length;i++){if(e.results[i].isFinal)final+=e.results[i][0].transcript+' ';else interim+=e.results[i][0].transcript;}
-        S.convTranscript=final.trim();
-        document.getElementById('convTranscript').innerHTML=(final?'<span>'+final+'</span>':'')+(interim?'<span style="color:#A0AEC0">'+interim+'</span>':'');
-      };
-      S.convRecognition.onerror=()=>{};
-      S.convRecognition.start();
-    }
-    document.getElementById('convRecBtn').textContent='⏹';
-    document.getElementById('convRecBtn').classList.add('on');
-    document.getElementById('convRecHint').textContent='답하는 중... 끝나면 다시 눌러봐! ⏹';
-    document.getElementById('convAudioWrap').style.display='none';
-  }catch(e){toast('마이크 권한이 필요해요!');}
-}
-
-function stopConvRec(){
-  S.convRecording=false;
-  if(S.convRecognition){try{S.convRecognition.stop();}catch(e){}}
-  if(S.convMediaRecorder?.state!=='inactive'){S.convMediaRecorder.stop();S.convMediaRecorder.stream.getTracks().forEach(t=>t.stop());}
-  document.getElementById('convRecBtn').textContent='🎤';
-  document.getElementById('convRecBtn').classList.remove('on');
-  document.getElementById('convRecHint').textContent='잘했어! 계속 대화하거나 자기평가하러 가봐! ✅';
-  // 남은 턴 여부에 따라 버튼 표시
-  const remaining = MAX_TURNS - convTurn - 1;
-  const nextBtn = document.getElementById('btnNextTurn');
-  if(nextBtn) nextBtn.textContent = remaining>0 ? '💬 계속 대화하기 ('+(remaining)+'번 남음)' : '💬 마지막 대화';
-  document.getElementById('convBtnRow').style.display='block';
-  toast('답변 완료! 계속 대화하거나 자기평가로 가봐!');
-}
-
-function toast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
-}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 </script>
 </body>
 </html>
